@@ -1,0 +1,685 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url(./base.css);
+@import url(./flexSystem.css);
+@import url(./easings.css);
+
+@layer General, Presets, Utils, Container, FlexSystem, Block, Button, Scroller;
+
+:root {
+    --clr-primary-hsl: 26, 51%, 29%;
+    --clr-primary-main: #6e4424;
+    --clr-primary-dark: #5f3a1e;
+    --clr-primary-light: #f0ebe7;
+    --clr-primary-text: #0e0502;
+
+    --clr-secondary-main: #9c27b0;
+    --clr-secondary-dark: #8e24aa;
+    --clr-secondary-light: #f3e5f5;
+    --clr-secondary-text: #09010b;
+    --clr-secondary-hsl: 291, 64%, 42%;
+
+    --clr-error: #d32f2f;
+    --clr-warning: #b76e00;
+    --clr-success: #66bb6a;
+    --clamp-title: clamp(1rem, 1.275vw + 0.5rem, 1.275rem);
+    --clamp-sub-title: clamp(0.975rem, 1.05vw + 0.25rem, 1.15rem);
+    --clr-black: #000;
+    --clr-dark: #101010;
+    --clr-body: #303030;
+    --clr-white: #fff;
+    --clr-gray: #808080;
+    --clr-gray-100: #f8f8f8;
+    --clr-gray-200: #f2f2f2;
+    --clr-gray-300: #ededed;
+    --clr-gray-400: #d8d8d8;
+    --clr-gray-500: #ccc;
+    --clr-gray-600: #bfbfbf;
+    --clr-gray-700: #a1a1a1;
+    --clr-gray-800: #9d9d9d;
+    --clr-gray-900: #637381;
+    --clr-auto: hsl(0, 0%, 0%, 5%);
+    --clr-link: #646cff;
+    --clr-link-hover: #535bf2;
+    --font-title: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+        sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --smooth-shadow: 0px 0.6px 0.9px rgba(0, 0, 0, 0.006),
+        0px 1.4px 2.1px rgba(0, 0, 0, 0.009), 0px 2.3px 3.5px rgba(0, 0, 0, 0.011),
+        0px 3.5px 5.2px rgba(0, 0, 0, 0.013), 0px 5px 7.5px rgba(0, 0, 0, 0.015),
+        0px 7.1px 10.6px rgba(0, 0, 0, 0.017),
+        0px 10.1px 15.1px rgba(0, 0, 0, 0.019),
+        0px 14.6px 21.9px rgba(0, 0, 0, 0.021),
+        0px 22.5px 33.8px rgba(0, 0, 0, 0.024), 0px 40px 60px rgba(0, 0, 0, 0.03);
+    --border-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+        rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    --elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    --elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    --elevation-3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+    --elevation-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    --elevation-6: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    --elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    --elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+    --elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+    --elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    --clamp-btn: clamp(1em, 2.5vw, 1.25em) clamp(1em, 2.5vw, 2em);
+    --clamp-box: clamp(1rem, 3vw, 1.25rem);
+    --overlay-linear: linear-gradient(hsl(0, 0%, 0%, 85%), hsl(0, 0%, 0%, 85%));
+    --block-spacing: clamp(2.5rem, 3vw + 1rem, 4rem);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    image-rendering: optimizeSpeed;
+    font-size: 0.925rem;
+    --clr-bg: hsl(0, 0%, 0%, 5%);
+    --clr-border: hsl(0, 0%, 0%, 10%);
+    --body-bg: var(--clr-white);
+}
+
+[data-theme="dark"] {
+    --body-bg: var(--clr-dark);
+    --clr-bg: hsl(0, 0%, 100%, 5%);
+    --clr-border: hsl(0, 0%, 100%, 10%);
+    --clr-body: #b7b7b7;
+    --clr-auto: hsl(0, 0%, 100%, 5%);
+}
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+
+@media (prefers-reduced-motion:no-preference) {
+    :root {
+        scroll-behavior: unset !important;
+    }
+}
+
+
+
+
+
+
+
+/*--------------------------------------------------------------
+# Back To Top
+--------------------------------------------------------------*/
+
+/* .back-to-top {
+    position: fixed;
+    right: clamp(15px, 3vw, 24px);
+    bottom: clamp(15px, 3vw, 24px);
+    display: grid;
+    place-items: center;
+}
+
+.back-to-top>* {
+    grid-area: 1 / -1;
+}
+
+.back-to-top svg {
+    transform: rotate(-90deg);
+}
+
+.back-to-top svg circle {
+    stroke: rgba(0, 0, 0, 0.1);
+    stroke-width: 3px;
+    stroke-linecap: round;
+    fill: transparent;
+    width: 100%;
+}
+
+.back-to-top svg .progress-bar {
+    stroke: url(#grad);
+    fill: #fff;
+    transition: stroke-dashoffset 0s ease-in-out;
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+.back-to-top .pct {
+    color: var(--clr-dark);
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    font-size: 14px;
+    z-index: 1;
+} */
+
+::selection {
+    background-color: var(--clr-primary-dark);
+    color: var(--clr-primary-light);
+}
+
+
+
+
+/*=============================================
+=            Form-Control            =
+=============================================*/
+
+.Form-root .row {
+    row-gap: 1.5rem;
+}
+
+.FormControl-root {
+    --_size-y: 50px;
+    --_size-x: 100%;
+    --_rounded: 0;
+    --_fz: 1rem;
+    --_fz-shrink: 0.725rem;
+    --_autofill-bg: hsl(0, 0%, 100%, 15%);
+    --_autofill-color: #fff;
+    position: relative;
+    isolation: isolate;
+}
+
+.FormControl-root.FormControl-required :is(.FormLabel-root, legend) {
+    contain: layout;
+}
+
+.FormControl-root.FormControl-required :is(.FormLabel-root, legend)::after {
+    content: "*";
+    color: #ff0000;
+}
+
+.FormControl-root .FormLabel-root {
+    position: absolute;
+    inset: 0;
+    text-indent: 1rem;
+    font-size: var(--_fz);
+    transition: 500ms cubic-bezier(0.175, 0.92, 0.165, 1);
+    pointer-events: none;
+    height: var(--_size-y);
+    line-height: var(--_size-y);
+}
+
+.FormControl-root:is(:focus-within, .FormControl-shrink) .FormLabel-root {
+    /* .FormControl-root:has(.InputBase-input:not(:placeholder-shown), .InputBase-input:-webkit-autofill) .FormLabel-root { */
+    transform: translateY(-50%);
+    font-size: var(--_fz-shrink);
+}
+
+
+.FormControl-root .InputBase-root {
+    display: grid;
+}
+
+.FormControl-root .InputBase-root>* {
+    grid-area: 1 / -1;
+}
+
+.FormControl-root .InputBase-input {
+    padding: 0.5rem 1rem;
+    margin: 0;
+    border: none;
+    outline: none;
+    height: var(--_size-y);
+    box-sizing: border-box;
+}
+
+.FormControl-root select.InputBase-input {
+    transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.FormControl-root select.InputBase-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 11.354a.5.5 0 0 0 .708 0L8 5.707l5.646 5.647a.5.5 0 0 0 .708-.708l-6-6a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 0 .708z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-size: 1rem 1rem;
+    background-position: calc(100% - 1rem);
+    background-repeat: no-repeat;
+}
+
+.FormControl-root select.InputBase-input:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M1.646 11.354a.5.5 0 0 0 .708 0L8 5.707l5.646 5.647a.5.5 0 0 0 .708-.708l-6-6a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 0 .708z'/%3e%3c/svg%3e");
+    background-size: 1rem 1rem;
+    background-position: calc(100% - 1rem);
+    background-repeat: no-repeat;
+}
+
+.FormControl-root .InputBase-input option {
+    font-size: initial;
+    color: initial;
+}
+
+.FormControl-root .InputBase-input:-webkit-autofill {
+    box-shadow: inset 0 0 0 100px var(--_autofill-bg) !important;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: var(--_autofill-color);
+    color: var(--_autofill-color)
+}
+
+.FormControl-root fieldset {
+    border: 1px solid currentColor;
+    padding-inline: 0.5rem;
+    position: absolute;
+    inset: -0.5rem 0 0 0;
+    pointer-events: none;
+    height: calc(100% + 0.5rem);
+    opacity: 0.5;
+    box-sizing: border-box;
+}
+
+.FormControl-root:is(:hover, .FormControl-shrink) fieldset {
+    opacity: 1;
+}
+
+.FormControl-root legend {
+    all: revert-layer;
+    margin: 0;
+    font-size: 0;
+    padding-inline: 0;
+    height: 1rem;
+    visibility: hidden;
+    overflow: hidden;
+    width: 0;
+    box-sizing: border-box;
+    transition: 500ms cubic-bezier(0.175, 0.92, 0.165, 1);
+}
+
+.FormControl-root.FormControl-shrink legend {
+    width: auto;
+    padding-inline: 0.5rem;
+    font-size: var(--_fz-shrink);
+}
+
+.FormControl-root :is(.InputBase-input, fieldset) {
+    width: 100%;
+    border-radius: var(--_rounded, 0);
+    -webkit-border-radius: var(--_rounded, 0);
+    -moz-border-radius: var(--_rounded, 0);
+    -ms-border-radius: var(--_rounded, 0);
+    -o-border-radius: var(--_rounded, 0);
+}
+
+.FormControl-root:not(.FormControl-shrink) .InputBase-input:is([type="date"], select) {
+    font-size: 0px;
+    color: transparent;
+}
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+
+/*=====  End of Form-Control  ======*/
+
+
+
+
+
+
+
+
+
+
+
+/*=============================================
+=            Drawer-root            =
+=============================================*/
+
+.Drawer-root {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    backdrop-filter: blur(0);
+    transition: var(--duration) backdrop-filter cubic-bezier(0.245, 0.97, 0.125, 1);
+}
+
+.Drawer-root.Drawer-open {
+    backdrop-filter: blur(1rem);
+}
+
+.Drawer-root[data-direction="left"] .Drawer-container {
+    right: auto;
+}
+
+.Drawer-root[data-direction="right"] .Drawer-container {
+    left: auto;
+}
+
+.Drawer-root[data-direction="top"] .Drawer-container {
+    bottom: auto;
+}
+
+.Drawer-root[data-direction="bottom"] .Drawer-container {
+    top: auto;
+}
+
+.Drawer-root::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-color: hsl(0 0% 0% / 50%);
+    opacity: 0;
+    transition: var(--duration) opacity cubic-bezier(0.245, 0.97, 0.125, 1);
+}
+
+.Drawer-root.Drawer-open::before {
+    opacity: 1;
+}
+
+
+.Drawer-container {
+    width: 100%;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    background-color: var(--drawer-bg, var(--clr-gray-200));
+    max-width: var(--drawer-width, 450px);
+    overflow-y: auto;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+
+.Drawer-root[data-direction="top"] .Drawer-container,
+.Drawer-root[data-direction="bottom"] .Drawer-container {
+    --drawer-width: 100%;
+}
+
+.Drawer-root[data-direction="left"] .Drawer-container {
+    box-shadow: var(--drawer-shadow, 2rem 0 3rem 0 hsl(0, 0%, 0%, 50%));
+}
+
+.Drawer-root[data-direction="right"] .Drawer-container {
+    box-shadow: var(--drawer-shadow, -2rem 0 3rem 0 hsl(0, 0%, 0%, 10%));
+}
+
+.Drawer-container>* {
+    padding: var(--drawer-padding, 1.5rem);
+    background-color: var(--drawer-bg, var(--clr-gray-200));
+}
+
+.Drawer-header {
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid var(--drawer-border, hsl(0, 0%, 10%));
+    z-index: 9;
+}
+
+.Drawer-footer {
+    position: sticky;
+    bottom: 0;
+    border-top: 1px solid var(--drawer-border, hsl(0, 0%, 10%));
+}
+
+.Drawer-root.Drawer-collapsing {
+    transition: 1s transform cubic-bezier(0.145, 0.88, 0.122, 1);
+}
+
+[data-drawer-close] {
+    font-size: 1.25rem;
+}
+
+.Drawer-sidebar .Drawer-body {
+    padding: 3rem;
+}
+
+
+/*=====  End of Drawer-root  ======*/
+
+
+
+
+
+
+.Tooltip-root {
+    position: fixed;
+    padding: 6px 10px;
+    background: rgba(17, 17, 17, 0.92);
+    color: #fff;
+    font-size: 13px;
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 140ms ease, transform 140ms ease;
+    z-index: 9999;
+    max-width: 220px;
+}
+
+.Tooltip-show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+
+
+
+
+/*=============================================
+=            Header-root            =
+=============================================*/
+
+.Header-root {
+    position: sticky;
+    inset: 0 0 auto 0;
+    z-index: 99;
+    padding-block: 0.75rem;
+    background-color: var(--clr-white);
+}
+.Header-root {
+    transition: 200ms background-color ease !important;
+}
+.Header-root.Header-scrolled {
+    box-shadow: 0 1px hsl(0 0% 0% / 10%);
+}
+.Drawer-active-right .Header-root {
+    right: var(--scrollbar-width);
+}
+
+.Drawer-active-left .Header-root {
+    left: var(--scrollbar-width);
+}
+
+
+.Header-topbar {
+    text-align: center;
+    padding: 0.5em;
+    margin-top: -0.5rem;
+    background-color: var(--clr-primary-main);
+    color: var(--clr-primary-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.Header-root .container {
+	max-width: 1200px;
+	margin-inline: auto;
+}
+.Header-topbar > * {
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+.Header-topbar > * > * {
+    background-color: var(--clr-primary-light);
+    color: var(--clr-primary-text);
+    padding: 0.5em;
+    flex-wrap: wrap;
+    font-weight: 700;
+    border-radius: 0.25em;
+    background-image: unset;
+    text-transform: uppercase;
+}
+.Header-topbar > * > *:not(a) {
+    font-size: 0.85rem;
+    font-family: monospace;
+}
+
+
+@media (min-width: 992px) {
+    #Button-sidebar {
+        display: none;
+    }
+}
+@media (max-width: 991.98px) {
+    .Header-topbar {
+        display: none;
+    }
+    #Button-sidebar {
+        padding: 0.5em;
+    }
+}
+@media (max-width: 991.98px) {
+    #Button-sidebar {
+        background-color: var(--clr-secondary-main);
+        color: var(--clr-secondary-text);
+    }
+    #Button-sidebar span {
+        display: none;
+    }
+}
+
+
+/*=====  End of Header-root  ======*/
+
+
+
+
+
+
+
+
+
+
+
+
+/*=============================================
+=            BLock-header            =
+=============================================*/
+
+
+.Navbar-root {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-inline: 0.5rem;
+    position: relative;
+}
+
+.Navbar-root .Navbar-actions {
+    display: flex;
+    align-items: center;
+}
+
+.Navbar-root .Navbar-cta {
+    align-items: center;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: 1s all cubic-bezier(0.245, 0.97, 0.125, 1);
+}
+
+#Drawer-sidebar .Navbar-root .Navbar-brand {
+    background-image: unset;
+    max-width: 200px;
+}
+
+.Navbar-root .Navbar-nav {
+    display: flex;
+    gap: 1.5rem;
+}
+.Navbar-root .Navbar-brand {
+    padding: 0.5rem;
+    max-width: 200px;
+}
+.Navbar-root .Navbar-nav a {
+    font-weight: 500;
+}
+
+.Navbar-root .Navbar-nav a:not([aria-current="page"]) {
+    color: var(--clr-gray-700);
+}
+.Navbar-root .Navbar-nav a[aria-current="page"] {
+    color: var(--clr-primary-text);
+}
+
+.Navbar-root .Navbar-actions >:first-child {
+    margin-right: 0.5em;
+}
+
+@media (max-width: 991.98px) {
+    #Navbar-nav {
+        display: none;
+    }
+    .Navbar-root {
+        justify-content: flex-end;
+    }
+    .Navbar-root .Navbar-cta {
+        display: none;
+    }
+}
+
+.Badge-root {
+    contain: layout;
+}
+
+.Badge-root:not([data-value="0"])::after {
+    content: attr(data-value);
+    position: absolute;
+    inset: 0 0 auto auto;
+    background-color: var(--clr-primary-main);
+    color: var(--clr-primary-light);
+    line-height: 1;
+    width: 3ch;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    font-size: 80%;
+    pointer-events: none;
+    translate: 20% -20%;
+}
+
+
+.Header-search {
+    max-width: 730px;
+    background-color: #F7F3EE;
+    margin-inline: auto;
+    border-radius: 100vmax;
+    contain: paint;
+    padding: 0.25rem;
+    margin-top: 0.5rem;
+}
+.Header-search form {
+    display: flex;
+}
+.Header-search form .HeaderSearch-input {
+    flex: 1;
+    margin-left: 1rem;
+    border-left: 1px solid hsl(var(--clr-primary-hsl), 20%) !important;
+}
+.Header-search form > *:not(button) {
+    border: 0 !important;
+    outline: 0 !important;
+    padding: 0.25em 1em;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    background-color: unset;
+}
+
+
+/*=====  End of BLock-header  ======*/

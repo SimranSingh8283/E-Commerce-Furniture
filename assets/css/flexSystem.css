@@ -1,0 +1,277 @@
+@layer Container {
+    .Container-root {
+        padding-inline: var(--gutter-x, 1rem);
+        margin-inline: auto;
+    }
+
+    @media (min-width: 576px) {
+        .Container-root:not(.Container-fluid) {
+            max-width: 540px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .Container-root:not(.Container-fluid) {
+            max-width: 720px;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .Container-root:not(.Container-fluid) {
+            max-width: 960px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .Container-root:not(.Container-fluid) {
+            max-width: 1140px;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .Container-root:not(.Container-fluid) {
+            max-width: 1320px;
+        }
+    }
+}
+
+@layer FlexSystem {
+    .Flex-root {
+        --gap: 0.5rem;
+        display: flex;
+        gap: var(--gap) calc(var(--gap) * 2);
+    }
+
+    .Flex-root.Flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .Flex-root.Flex-nowrap {
+        flex-wrap: nowrap;
+    }
+
+    @media (max-width: 991.98px) {
+        .Flex-root {
+            flex-wrap: wrap !important;
+        }
+    }
+
+    .FlexJustify-center {
+        justify-content: center;
+    }
+
+    .FlexAlign-center {
+        align-items: center;
+    }
+
+    .Col-root {
+        width: 100%;
+    }
+
+    .Col-root[class*="Col-"] {
+        flex: 0 1 calc((100% / var(--columns)) - calc(var(--gap) * 2) * (var(--columns) - 1) / var(--columns));
+        min-width: 0;
+    }
+
+    @media (min-width: 576px) {
+        .Col-sm-1 {
+            --columns: 12;
+        }
+
+        .Col-sm-2 {
+            --columns: 6;
+        }
+
+        .Col-sm-3 {
+            --columns: 4;
+        }
+
+        .Col-sm-4 {
+            --columns: 3;
+        }
+
+        .Col-sm-5 {
+            --columns: 2.4;
+        }
+
+        .Col-sm-6 {
+            --columns: 2;
+        }
+
+        .Col-sm-7 {
+            --columns: 1.71;
+        }
+
+        .Col-sm-8 {
+            --columns: 1.5;
+        }
+
+        .Col-sm-9 {
+            --columns: 1.33;
+        }
+
+        .Col-sm-10 {
+            --columns: 1.2;
+        }
+
+        .Col-sm-11 {
+            --columns: 1.09;
+        }
+
+        .Col-sm-12 {
+            --columns: 1;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .Col-md-1 {
+            --columns: 12;
+        }
+
+        .Col-md-2 {
+            --columns: 6;
+        }
+
+        .Col-md-3 {
+            --columns: 4;
+        }
+
+        .Col-md-4 {
+            --columns: 3;
+        }
+
+        .Col-md-5 {
+            --columns: 2.4;
+        }
+
+        .Col-md-6 {
+            --columns: 2;
+        }
+
+        .Col-md-7 {
+            --columns: 1.71;
+        }
+
+        .Col-md-8 {
+            --columns: 1.5;
+        }
+
+        .Col-md-9 {
+            --columns: 1.33;
+        }
+
+        .Col-md-10 {
+            --columns: 1.2;
+        }
+
+        .Col-md-11 {
+            --columns: 1.09;
+        }
+
+        .Col-md-12 {
+            --columns: 1;
+        }
+    }
+
+    @media (min-width: 992px) {
+
+        .Col-lg-1 {
+            --columns: 12;
+        }
+
+        .Col-lg-2 {
+            --columns: 6;
+        }
+
+        .Col-lg-3 {
+            --columns: 4;
+        }
+
+        .Col-lg-4 {
+            --columns: 3;
+        }
+
+        .Col-lg-5 {
+            --columns: 2.4;
+        }
+
+        .Col-lg-6 {
+            --columns: 2;
+        }
+
+        .Col-lg-7 {
+            --columns: 1.71;
+        }
+
+        .Col-lg-8 {
+            --columns: 1.5;
+        }
+
+        .Col-lg-9 {
+            --columns: 1.33;
+        }
+
+        .Col-lg-10 {
+            --columns: 1.2;
+        }
+
+        .Col-lg-11 {
+            --columns: 1.09;
+        }
+
+        .Col-lg-12 {
+            --columns: 1;
+        }
+    }
+
+    @media (min-width: 1200px) {
+
+        .Col-xl-1 {
+            --columns: 12;
+        }
+
+        .Col-xl-2 {
+            --columns: 6;
+        }
+
+        .Col-xl-3 {
+            --columns: 4;
+        }
+
+        .Col-xl-4 {
+            --columns: 3;
+        }
+
+        .Col-xl-5 {
+            --columns: 2.4;
+        }
+
+        .Col-xl-6 {
+            --columns: 2;
+        }
+
+        .Col-xl-7 {
+            --columns: 1.71;
+        }
+
+        .Col-xl-8 {
+            --columns: 1.5;
+        }
+
+        .Col-xl-9 {
+            --columns: 1.33;
+        }
+
+        .Col-xl-10 {
+            --columns: 1.2;
+        }
+
+        .Col-xl-11 {
+            --columns: 1.09;
+        }
+
+        .Col-xl-12 {
+            --columns: 1;
+        }
+    }
+}
