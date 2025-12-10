@@ -33,6 +33,7 @@ $address = get_theme_mod('physical_address');
 
     <footer id="Footer-root" class="Footer-root" aria-label="Site footer with quick-links and contact information">
         <div class="container">
+            test
             <div class="Footer-copyrights text-center" data-aos="fade-in">
                 <div class="payments">
                     <img src="<?= $site_url?>/wp-content/uploads/2025/12/visa-1.png" alt="">
@@ -44,7 +45,7 @@ $address = get_theme_mod('physical_address');
                 </div>
 
                 <div class="copy">
-                    <span>© <?= date("Y") ?>, Nutomo Solutions Powered by Nutomo. </span>
+                    <span>© <?= date("Y") ?>, Copyright, All rights reserved. </span>
                     <a href="#">Refund policy</a>
                     <a href="#">Privacy policy</a>
                     <a href="#">Terms of service</a>
