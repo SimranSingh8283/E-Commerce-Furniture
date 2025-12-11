@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme Gallery Meta Box Class
+ * Theme Gallery + Story Sub Heading Meta Boxes
  */
 
 if (!class_exists('ThemeFunctions')) {
@@ -8,10 +8,20 @@ if (!class_exists('ThemeFunctions')) {
     {
         public static function init()
         {
+            // Existing gallery meta box
             add_action('add_meta_boxes', [__CLASS__, 'add_meta_box']);
             add_action('save_post', [__CLASS__, 'save_meta_box']);
+
+            // NEW: Sub heading meta box for stories
+            add_action('add_meta_boxes', [__CLASS__, 'add_story_subheading_box']);
+            add_action('save_post', [__CLASS__, 'save_story_subheading']);
         }
 
+        /**
+         * -------------------------
+         *  GALLERY META BOX (OLD)
+         * -------------------------
+         */
         public static function add_meta_box()
         {
             add_meta_box(
@@ -44,6 +54,7 @@ if (!class_exists('ThemeFunctions')) {
                 }
                 ?>
             </div>
+
             <script>
                 jQuery(document).ready(function ($) {
                     var frame;
@@ -68,6 +79,7 @@ if (!class_exists('ThemeFunctions')) {
 
                     $('.select-gallery-button').on('click', function (e) {
                         e.preventDefault();
+
                         if (frame) {
                             frame.open();
                             return;
@@ -81,20 +93,23 @@ if (!class_exists('ThemeFunctions')) {
 
                         frame.on('select', function () {
                             var selection = frame.state().get('selection');
+
                             selection.each(function (attachment) {
                                 attachment = attachment.toJSON();
                                 var exists = $('#gallery-preview .gallery-item[data-id="' + attachment.id + '"]').length > 0;
+
                                 if (!exists) {
                                     var thumb = attachment.sizes?.thumbnail?.url || attachment.url;
                                     var item = `
-                                    <div class="gallery-item" data-id="${attachment.id}" style="position:relative; cursor:move;">
-                                        <img src="${thumb}" style="width:100px;height:auto;">
-                                        <span class="remove-image" style="position:absolute;top:0;right:0;background:#000;color:#fff;padding:2px 6px;cursor:pointer;">&times;</span>
-                                    </div>
-                                `;
+                                        <div class="gallery-item" data-id="${attachment.id}" style="position:relative; cursor:move;">
+                                            <img src="${thumb}" style="width:100px;height:auto;">
+                                            <span class="remove-image" style="position:absolute;top:0;right:0;background:#000;color:#fff;padding:2px 6px;cursor:pointer;">&times;</span>
+                                        </div>
+                                    `;
                                     $('#gallery-preview').append(item);
                                 }
                             });
+
                             updateHiddenInput();
                         });
 
@@ -112,12 +127,60 @@ if (!class_exists('ThemeFunctions')) {
             }
         }
 
+        public static function add_story_subheading_box()
+        {
+            add_meta_box(
+                'story_subheading_box',
+                __('Story Sub Heading', THEME_SLUG),
+                [__CLASS__, 'render_story_subheading_box'],
+                'post',
+                'normal',
+                'high'
+            );
+        }
+
+        public static function render_story_subheading_box($post)
+        {
+            // Get category slugs
+            $cats = wp_get_post_categories($post->ID, ['fields' => 'slugs']);
+
+            // Check lowercase slug
+            if (!in_array('stories', $cats)) {
+                echo "<p style='color:#888;'>Assign this post to the <strong>Stories</strong> category to enable Sub Heading.</p>";
+                return;
+            }
+
+            // Get saved value
+            $value = get_post_meta($post->ID, '_story_sub_heading', true);
+            ?>
+
+            <label for="story_sub_heading"><strong>Sub Heading</strong></label>
+            <input type="text" id="story_sub_heading" name="story_sub_heading" style="width:100%; margin-top:8px;"
+                value="<?php echo esc_attr($value); ?>">
+
+            <?php
+        }
+
+        public static function save_story_subheading($post_id)
+        {
+            if (array_key_exists('story_sub_heading', $_POST)) {
+                update_post_meta(
+                    $post_id,
+                    '_story_sub_heading',
+                    sanitize_text_field($_POST['story_sub_heading'])
+                );
+            }
+        }
+
+        /**
+         * Currency Formatter
+         */
         public static function formatCurrency($amount, $region = 'IN')
         {
             $region = strtoupper($region);
 
             switch ($region) {
-                case 'IN': // Indian Numbering System
+                case 'IN':
                     if ($amount >= 10000000) {
                         return round($amount / 10000000, 2) . ' Cr';
                     } elseif ($amount >= 100000) {
@@ -128,9 +191,6 @@ if (!class_exists('ThemeFunctions')) {
                         return number_format($amount);
                     }
 
-                case 'US':
-                case 'EU':
-                case 'UK':
                 default:
                     if ($amount >= 1000000000) {
                         return round($amount / 1000000000, 2) . ' B';
