@@ -33,7 +33,7 @@ $address = get_theme_mod('physical_address');
 
     <footer id="Footer-root" class="Footer-root" aria-label="Site footer with quick-links and contact information">
         <div class="container">
-            <div class="Footer-copyrights text-center" data-aos="fade-in">
+            <div class="Footer-copyrights text-center">
                 <div class="payments">
                     <img src="<?= $site_url?>/wp-content/uploads/2025/12/visa-1.png" alt="">
                     <img src="<?= $site_url?>/wp-content/uploads/2025/12/gpay.png" alt="">

@@ -8,7 +8,6 @@
     }
 
     p {
-        line-height: 1.35;
         text-wrap: pretty;
     }
 
@@ -28,6 +27,7 @@
         color: var(--clr-primary-text);
         background-color: var(--body-bg);
         letter-spacing: 0.15px;
+        line-height: 1.5;
     }
 
     :is(h1, h2, h3, h4, h5, h6) {
@@ -190,16 +190,21 @@
         letter-spacing: 0;
     }
 
-    .Block-heading[data-level="1"]>[aria-level="1"] {
+    .Block-heading > [data-level="1"] {
         font-size: var(--clamp-title);
-        font-weight: 400;
+        font-weight: 600;
         text-transform: capitalize;
         text-wrap: balance;
     }
 
-    .Block-heading[data-level="2"]>[aria-level="2"] {
+    .Block-heading > [data-level="2"] {
         font-size: var(--clamp-sub-title);
         font-weight: 500;
+        color: #CD9265;
+    }
+
+    .Block-heading :is([class$="prefix"], [class$="suffix"], .clr) {
+        color: #9a5f32;
     }
 
     @keyframes Gradient {
@@ -503,6 +508,39 @@
         backdrop-filter: blur(0.5em);
     }
 
+    .Button-root[data-variant="underline"] {
+        background-color: transparent;
+        background-image: linear-gradient(var(--clr-primary-main), var(--clr-primary-main));
+        background-size: 100% 1px;
+        background-position-y: 100%;
+        background-repeat: no-repeat;
+        transition: background-size 75ms ease;
+    }
+
+    .Button-root[data-variant="underline"]:hover {
+        background-size: 100% 2px;
+    }
+
+    .Button-root[data-variant="alpha"] {
+        background-color: hsl(0, 0%, 0%, 20%);
+        color: inherit;
+        backdrop-filter: blur(1rem);
+        padding: 0.725em;
+        padding-left: 1.5em;
+        border-radius: 100vmax;
+        align-items: center;
+    }
+
+    .Button-root[data-variant="alpha"] .Button-icon {
+        width: 30px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        display: grid;
+        place-content: center;
+        background-color: var(--clr-primary-light);
+        color: var(--clr-primary-text);
+    }
+
     .Button-root.Button-icon {
         --_size: 1.35em;
         padding: 0.375em;
@@ -516,6 +554,11 @@
         -moz-border-radius: 100vmax;
         -ms-border-radius: 100vmax;
         -o-border-radius: 100vmax;
+    }
+
+    .Button-root[class*="Button-icon-"] {
+        display: flex;
+        gap: 1rem;
     }
 
     .Button-root.Button-icon:hover {
@@ -532,19 +575,6 @@
 
     .Button-root>* {
         pointer-events: none;
-    }
-
-    .Button-root[data-variant="underline"] {
-        background-color: transparent;
-        background-image: linear-gradient(var(--clr-primary-main), var(--clr-primary-main));
-        background-size: 100% 1px;
-        background-position-y: 100%;
-        background-repeat: no-repeat;
-        transition: background-size 75ms ease;
-    }
-
-    .Button-root[data-variant="underline"]:hover {
-        background-size: 100% 2px;
     }
 
     [data-group="btns"] {
