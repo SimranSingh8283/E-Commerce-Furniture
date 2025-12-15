@@ -22,6 +22,9 @@ $yt = get_theme_mod('youtube_link');
 
 $site_url = site_url();
 $template_uri = get_template_directory_uri();
+
+
+$menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_id' => 'Navbar-nav', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Navbar-item', 'add_a_class' => 'Navbar-link');
 ?>
 
 <!DOCTYPE html>
@@ -53,11 +56,7 @@ $template_uri = get_template_directory_uri();
                         <img src="<?= $logo ?>" alt="">
                     </a>
 
-                    <?php
-                    $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_id' => 'Navbar-nav', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Navbar-item', 'add_a_class' => 'Navbar-link');
-
-                    wp_nav_menu($menu_arg);
-                    ?>
+                    <?php wp_nav_menu($menu_arg);?>
 
                     <div class="Navbar-actions">
                         <a href="#" class="Button-root Button-primary" data-variant="contained">Sign Up</a>
@@ -144,7 +143,7 @@ $template_uri = get_template_directory_uri();
                             </a>
                         </div>
 
-                        <Button class="Button-root Button-icon Button-shop Button-menu">
+                        <Button class="Button-root Button-icon Button-shop Button-menu" data-drawer="#Drawer-menu">
                             <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>
                         </Button>
                     </div>
@@ -202,70 +201,24 @@ $template_uri = get_template_directory_uri();
             </div>
         </header>
 
-        <div id="Drawer-sidebar" data-direction="right" data-timeout="1000" data-lenis-prevent
-            class="Drawer-root Drawer-sidebar" style="display: none;">
+        <div id="Drawer-menu" data-direction="right" data-timeout="1000" data-lenis-prevent class="Drawer-root Drawer-menu"
+            style="display: none;">
             <div class="Drawer-container">
                 <div class="Drawer-header">
                     <nav class="Navbar-root">
                         <a href="<?= $site_url; ?>" class="Navbar-brand">
-                            <img src="<?= $logo ?>" alt="">
+                            <img src="<?= $site_url ?>/wp-content/uploads/2025/12/Group-1.png" alt="">
                         </a>
 
-                        <button id="Button-close-sidebar" data-drawer-close class="Button-root Button-icon Button-light">
-                            <i class="fa fa-close"></i>
+                        <button id="Button-close-menu" data-drawer-close class="Button-root Button-icon Button-light">
+                            <iconify-icon icon="mdi:close"></iconify-icon>
                         </button>
                     </nav>
                 </div>
 
                 <div class="Drawer-body">
-                    <?php
-                    $menu_arg = array('menu' => 'Sidebar Menu', 'menu_class' => 'Sidebar-nav', 'menu_id' => 'Sidebar-nav', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Sidebar-item', 'add_a_class' => 'Sidebar-link');
-
-                    wp_nav_menu($menu_arg);
-                    ?>
+                    <?php wp_nav_menu($menu_arg);?>
                 </div>
-
-                <div class="Drawer-footer">
-                    <div class="border"></div>
-                    <span>Follow Us:</span>
-
-                    <?php if (!empty($insta) || !empty($fb)) { ?>
-                        <ul class="Social-root">
-                            <?php if (!empty($insta)) { ?>
-                                <li class="Social-item" data-aos="zoom-in">
-                                    <a class="Social-link Button-root Button-icon" target="_blank" href="<?= $insta; ?>">
-                                        <i class="fa-brands fa-instagram"></i>
-                                    </a>
-                                </li>
-                            <?php } ?>
-
-                            <?php if (!empty($fb)) { ?>
-                                <li class="Social-item" data-aos="zoom-in">
-                                    <a class="Social-link Button-root Button-icon" target="_blank" href="<?= $fb; ?>">
-                                        <i class="fa-brands fa-facebook-f"></i>
-                                    </a>
-                                </li>
-                            <?php } ?>
-
-                            <?php if (!empty($li)) { ?>
-                                <li class="Social-item" data-aos="zoom-in">
-                                    <a class="Social-link Button-root Button-icon" target="_blank" href="<?= $li; ?>">
-                                        <i class="fa-brands fa-linkedin"></i>
-                                    </a>
-                                </li>
-                            <?php } ?>
-
-                            <?php if (!empty($yt)) { ?>
-                                <li class="Social-item">
-                                    <a class="Social-link Button-root Button-icon" target="_blank" href="<?= $yt; ?>">
-                                        <i class="fa-brands fa-youtube"></i>
-                                    </a>
-                                </li>
-                            <?php } ?>
-                        </ul>
-                    <?php } ?>
-                </div>
-
             </div>
         </div>
 
