@@ -73,6 +73,7 @@ $template_uri = get_template_directory_uri();
                                 <img src="<?= $template_uri ?>/assets/media/wishlist.svg" alt="">
                             </a>
                         </div>
+
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
 
@@ -142,6 +143,10 @@ $template_uri = get_template_directory_uri();
                                 <img src="<?= $template_uri ?>/assets/media/shopping-cart.svg" alt="">
                             </a>
                         </div>
+
+                        <Button class="Button-root Button-icon Button-shop Button-menu">
+                            <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>
+                        </Button>
                     </div>
                 </nav>
 

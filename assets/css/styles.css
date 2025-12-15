@@ -652,18 +652,20 @@ input[type=number] {
         display: none;
     }
 
-    #Button-sidebar {
-        padding: 0.5em;
-    }
-}
-
-@media (max-width: 991.98px) {
-    #Button-sidebar {
-        background-color: var(--clr-secondary-main);
-        color: var(--clr-secondary-text);
+    .Navbar-root {
+        padding: 0;
+        justify-content: space-between !important;
     }
 
-    #Button-sidebar span {
+    .Navbar-actions>:not(.Button-menu) {
+        display: none;
+    }
+
+    .Navbar-actions .Button-menu iconify-icon {
+        font-size: 2rem;
+    }
+
+    .Header-search {
         display: none;
     }
 }
@@ -926,6 +928,7 @@ input[type=number] {
     background-color: transparent;
     font-family: var(--font-body);
 }
+
 .Form-newsletter input::placeholder {
     font-weight: 600;
     color: var(--clr-primary-main);
