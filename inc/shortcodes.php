@@ -69,6 +69,7 @@ function default_post_slider_shortcode($atts)
         .Post-swiper-wrapper .Post-pagination .swiper-pagination-bullet {
             width: 0.725rem;
             border: 2px solid var(--clr-primary-main);
+            height: auto;
             border-radius: 50%;
             aspect-ratio: 1;
             background-color: transparent;
