@@ -543,6 +543,8 @@
 
     .Button-root.Button-icon {
         --_size: 1.35em;
+        display: grid;
+        place-content: center;
         padding: 0.375em;
         width: calc(var(--_size) * 1.525);
         height: calc(var(--_size) * 1.525);
