@@ -37,7 +37,7 @@
 
 @layer FlexSystem {
     .Flex-root {
-        --gap: 0.5rem;
+        --gap: 1.5rem;
         display: flex;
         gap: var(--gap) calc(var(--gap) * 2);
     }
