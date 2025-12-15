@@ -77,17 +77,14 @@ $template_uri = get_template_directory_uri();
                             document.addEventListener("DOMContentLoaded", function () {
 
                                 function syncWishlistBadge() {
-                                    const menuSpan = document.querySelector('.Navbar-root .woosw-menu-item-inner');
-                                    const badge = document.querySelector('.Navbar-root .Button-wishlist');
-
+                                    const menuSpan = document.querySelector('.woosw-menu-item-inner');
+                                    const badge = document.querySelector('.Button-wishlist');
                                     if (!menuSpan || !badge) return;
 
                                     const count = parseInt(menuSpan.getAttribute('data-count')) || 0;
 
                                     const badgeWrapper = badge.closest('.Badge-root');
-                                    if (badgeWrapper) {
-                                        badgeWrapper.setAttribute('data-value', count);
-                                    }
+                                    if (badgeWrapper) badgeWrapper.setAttribute('data-value', count);
 
                                     let tooltip = "Your wishlist is empty";
                                     if (count === 1) tooltip = "1 item in wishlist";
@@ -96,16 +93,44 @@ $template_uri = get_template_directory_uri();
                                     badge.setAttribute('data-tooltip', tooltip);
                                 }
 
-                                syncWishlistBadge();
+                                function observeWishlist() {
+                                    let el = document.querySelector('.woosw-menu-item-inner');
+                                    if (!el) return;
 
-                                const menuItem = document.querySelector('.Navbar-root .woosw-menu-item-inner');
-                                if (menuItem) {
-                                    const observer = new MutationObserver(syncWishlistBadge);
-                                    observer.observe(menuItem, { attributes: true, attributeFilter: ['data-count'] });
+                                    syncWishlistBadge();
+
+                                    const observer = new MutationObserver((mutations) => {
+                                        let replaced = false;
+
+                                        mutations.forEach(mutation => {
+                                            if (mutation.type === "attributes" && mutation.attributeName === "data-count") {
+                                                syncWishlistBadge();
+                                            }
+
+                                            if (mutation.type === "childList") {
+                                                replaced = true;
+                                            }
+                                        });
+
+                                        if (replaced) {
+                                            setTimeout(observeWishlist, 50);
+                                        }
+                                    });
+
+                                    observer.observe(el.parentNode, {
+                                        childList: true,
+                                        subtree: true,
+                                        attributes: true
+                                    });
                                 }
 
-                                document.body.addEventListener('woosw:update', syncWishlistBadge);
+                                observeWishlist();
+
+                                document.addEventListener('woosw_change_count', observeWishlist);
+                                document.addEventListener('woosw_update_fragments', observeWishlist);
+                                document.addEventListener('woosw_loaded', observeWishlist);
                             });
+
                         </script>
 
                         <?php $count = WC()->cart->get_cart_contents_count(); ?>

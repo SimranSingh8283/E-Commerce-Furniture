@@ -21,7 +21,7 @@
     --clr-error: #d32f2f;
     --clr-warning: #b76e00;
     --clr-success: #66bb6a;
-    --clamp-title: clamp(1rem, 1.5vw + 0.5rem, 2rem);
+    --clamp-title: clamp(1.5rem, 1.75vw + 0.725rem, 2rem);
     --clamp-sub-title: clamp(0.975rem, 1.05vw + 0.25rem, 1.15rem);
     --clr-black: #000;
     --clr-dark: #101010;
@@ -812,3 +812,123 @@ input[type=number] {
 
 
 /*=====  End of BLock-header  ======*/
+
+
+
+
+
+
+
+
+
+
+
+/*=============================================
+=            Block-Products swipr            =
+=============================================*/
+
+#Container-products {
+    overflow: hidden;
+}
+
+#Swiper-products .swiper {
+    overflow: unset;
+    clip-path: inset(0 -100vmax 0 0);
+}
+
+#Swiper-products img {
+    width: 100%;
+    aspect-ratio: 1 / 1.5;
+    border-radius: 1rem;
+    object-fit: cover;
+}
+
+/*=====  End of Block-Products swipr  ======*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=============================================
+=            Block- Footer            =
+=============================================*/
+
+.Footer-root {
+    padding-block: var(--block-spacing) 0;
+    background: url("http://e-commerce-furniture.local/wp-content/uploads/2025/12/Desktop-6.jpg") center / cover;
+}
+
+.Footer-root .copy {
+    margin-top: var(--block-spacing);
+    padding: 1rem 0.5rem;
+    border-top: 1px solid hsl(var(--clr-primary-hsl), 30%);
+}
+
+.Footer-root .Widget-root .branding {
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.Footer-root .Widget-root .branding img {
+    max-width: 300px;
+}
+
+.Footer-root .Widget-root .text p {
+    font-size: clamp(1rem, 1.25vw + 0.25rem, 1.25rem);
+}
+
+.Footer-root .Widget-root .Widget-heading>* {
+    font-size: clamp(1.12rem, 1.35vw + 0.5rem, 20px);
+    font-weight: 700;
+    color: var(--clr-primary-main);
+    margin-bottom: 1em;
+    display: block;
+}
+
+.Footer-root .Widget-root .Widget-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.Footer-root .Widget-root .Widget-list li a {
+    color: var(--clr-primary-main);
+}
+
+@media (max-width: 991.98px) {
+    .Footer-root .Flex-root {
+        row-gap: 3rem;
+    }
+
+    .Footer-root .Col-lg-2 {
+        --columns: 2;
+    }
+}
+
+
+.Form-newsletter {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr auto;
+}
+
+.Form-newsletter input {
+    border-radius: 0.5rem;
+    border: 2px solid var(--clr-primary-main);
+    padding: 0.5em 1em;
+    background-color: transparent;
+    font-family: var(--font-body);
+}
+.Form-newsletter input::placeholder {
+    font-weight: 600;
+    color: var(--clr-primary-main);
+}
+
+/*=====  End of Block- Footer  ======*/
