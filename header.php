@@ -81,56 +81,46 @@ $template_uri = get_template_directory_uri();
                                     const badge = document.querySelector('.Button-wishlist');
                                     if (!menuSpan || !badge) return;
 
-                                    const count = parseInt(menuSpan.getAttribute('data-count')) || 0;
+                                    const count = parseInt(menuSpan.dataset.count || 0, 10);
 
                                     const badgeWrapper = badge.closest('.Badge-root');
-                                    if (badgeWrapper) badgeWrapper.setAttribute('data-value', count);
+                                    if (badgeWrapper && badgeWrapper.getAttribute('data-value') != count) {
+                                        badgeWrapper.setAttribute('data-value', count);
+                                    }
 
                                     let tooltip = "Your wishlist is empty";
                                     if (count === 1) tooltip = "1 item in wishlist";
-                                    else if (count > 1) tooltip = count + " items in wishlist";
+                                    else if (count > 1) tooltip = `${count} items in wishlist`;
 
-                                    badge.setAttribute('data-tooltip', tooltip);
+                                    if (badge.getAttribute('data-tooltip') !== tooltip) {
+                                        badge.setAttribute('data-tooltip', tooltip);
+                                    }
                                 }
 
-                                function observeWishlist() {
-                                    let el = document.querySelector('.woosw-menu-item-inner');
-                                    if (!el) return;
-
-                                    syncWishlistBadge();
-
-                                    const observer = new MutationObserver((mutations) => {
-                                        let replaced = false;
-
-                                        mutations.forEach(mutation => {
-                                            if (mutation.type === "attributes" && mutation.attributeName === "data-count") {
+                                const observer = new MutationObserver((mutations) => {
+                                    for (const mutation of mutations) {
+                                        if (mutation.type === 'childList') {
+                                            if (
+                                                document.querySelector('.woosw-menu-item-inner')
+                                            ) {
                                                 syncWishlistBadge();
+                                                break;
                                             }
-
-                                            if (mutation.type === "childList") {
-                                                replaced = true;
-                                            }
-                                        });
-
-                                        if (replaced) {
-                                            setTimeout(observeWishlist, 50);
                                         }
-                                    });
+                                    }
+                                });
 
-                                    observer.observe(el.parentNode, {
-                                        childList: true,
-                                        subtree: true,
-                                        attributes: true
-                                    });
-                                }
+                                observer.observe(document.body, {
+                                    childList: true,
+                                    subtree: true
+                                });
 
-                                observeWishlist();
+                                syncWishlistBadge();
 
-                                document.addEventListener('woosw_change_count', observeWishlist);
-                                document.addEventListener('woosw_update_fragments', observeWishlist);
-                                document.addEventListener('woosw_loaded', observeWishlist);
+                                document.addEventListener('woosw_change_count', syncWishlistBadge);
+                                document.addEventListener('woosw_update_fragments', syncWishlistBadge);
+                                document.addEventListener('woosw_loaded', syncWishlistBadge);
                             });
-
                         </script>
 
                         <?php $count = WC()->cart->get_cart_contents_count(); ?>
