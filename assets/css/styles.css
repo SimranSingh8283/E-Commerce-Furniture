@@ -645,6 +645,10 @@ input[type=number] {
     #Button-sidebar {
         display: none;
     }
+
+    .Navbar-actions .Button-menu {
+        display: none;
+    }
 }
 
 @media (max-width: 991.98px) {
