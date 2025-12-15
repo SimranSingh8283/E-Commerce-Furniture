@@ -161,7 +161,7 @@ $template_uri = get_template_directory_uri();
                     <form role="search" method="get" class="HeaderSearch-form"
                         action="<?php echo esc_url(home_url('/')); ?>">
 
-                        <select name="product_cat" class="HeaderSearch-select">
+                        <select class="HeaderSearch-select" id="productCatSelect">
                             <option value="">All Categories</option>
 
                             <?php foreach ($product_categories as $cat): ?>
@@ -181,6 +181,22 @@ $template_uri = get_template_directory_uri();
                             <img src="<?= $template_uri ?>/assets/media/search.svg" alt="Search">
                         </button>
                     </form>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const form = document.querySelector('.HeaderSearch-form');
+                            const select = document.getElementById('productCatSelect');
+
+                            form.addEventListener('submit', function () {
+                                if (select.value) {
+                                    select.setAttribute('name', 'product_cat');
+                                } else {
+                                    select.removeAttribute('name');
+                                }
+                            });
+                        });
+                    </script>
+
                 </div>
 
             </div>
