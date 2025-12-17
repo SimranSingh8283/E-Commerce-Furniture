@@ -136,6 +136,10 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
                             </div>
                         </div>
 
+                        <Button class="Button-root Button-icon Button-shop Button-menu" data-drawer="#Drawer-menu">
+                            <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>
+                        </Button>
+
                     </div>
                 </nav>
 
