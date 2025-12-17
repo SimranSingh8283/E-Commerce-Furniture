@@ -56,7 +56,7 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
                         <img src="<?= $logo ?>" alt="">
                     </a>
 
-                    <?php wp_nav_menu($menu_arg);?>
+                    <?php wp_nav_menu($menu_arg); ?>
 
                     <div class="Navbar-actions">
                         <a href="#" class="Button-root Button-primary" data-variant="contained">Sign Up</a>
@@ -122,30 +122,20 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
                                 document.addEventListener('woosw_loaded', syncWishlistBadge);
                             });
                         </script>
-
-                        <?php $count = WC()->cart->get_cart_contents_count(); ?>
-                        <?php
-                        $count = WC()->cart->get_cart_contents_count();
-
-                        if ($count == 0) {
-                            $tooltip_text = "Your cart is empty";
-                        } elseif ($count == 1) {
-                            $tooltip_text = "1 item in your cart";
-                        } else {
-                            $tooltip_text = "$count items in your cart";
-                        }
-                        ?>
-
-                        <div class="Badge-root" data-value="<?php echo $count; ?>">
-                            <a data-tooltip="<?php echo esc_attr($tooltip_text); ?>" href="<?php echo wc_get_cart_url(); ?>"
+                        
+                        <div class="cart-badge-wrapper">
+                            <?php $count = WC()->cart->get_cart_contents_count(); ?>
+                            <?php
+                            $tooltip_text = $count === 0 ? 'Your cart is empty' : ($count === 1 ? '1 item in your cart' : "$count items in your cart");
+                            ?>
+                            <div class="Badge-root" data-value="<?php echo $count; ?>">
+                                <a data-tooltip="<?php echo esc_attr($tooltip_text); ?>" href="<?php echo wc_get_cart_url(); ?>"
                                 class="Button-root Button-icon Button-shop cart-button">
-                                <img src="<?= $template_uri ?>/assets/media/shopping-cart.svg" alt="">
-                            </a>
+                                    <img src="<?= $template_uri ?>/assets/media/shopping-cart.svg" alt="">
+                                </a>
+                            </div>
                         </div>
 
-                        <Button class="Button-root Button-icon Button-shop Button-menu" data-drawer="#Drawer-menu">
-                            <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>
-                        </Button>
                     </div>
                 </nav>
 
@@ -157,44 +147,25 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
                     ]);
                     ?>
 
-                    <form role="search" method="get" class="HeaderSearch-form"
-                        action="<?php echo esc_url(home_url('/')); ?>">
-
-                        <select class="HeaderSearch-select" id="productCatSelect">
+                    <form role="search" method="get" class="HeaderSearch-form" action="<?= esc_url(home_url('/')); ?>">
+                        <select class="HeaderSearch-select" name="product_cat">
                             <option value="">All Categories</option>
-
                             <?php foreach ($product_categories as $cat): ?>
-                                <option value="<?php echo esc_attr($cat->slug); ?>" <?php selected($_GET['product_cat'] ?? '', $cat->slug); ?>>
-                                    <?php echo esc_html($cat->name); ?>
+                                <option value="<?= esc_attr($cat->slug); ?>" <?= selected($_GET['product_cat'] ?? '', $cat->slug) ?>>
+                                    <?= esc_html($cat->name); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
 
-                        <input type="search" class="HeaderSearch-input" placeholder="Search..." name="s"
-                            value="<?php echo esc_attr(get_search_query()); ?>" />
+                        <input type="search" name="s" class="HeaderSearch-input" placeholder="Search..."
+                            value="<?= esc_attr(get_search_query()); ?>">
 
                         <input type="hidden" name="post_type" value="product">
 
-                        <button data-tooltip="Search" data-position="bottom" type="submit"
-                            class="HeaderSearch-button Button-root Button-icon">
+                        <button type="submit" class="HeaderSearch-button Button-root Button-icon">
                             <img src="<?= $template_uri ?>/assets/media/search.svg" alt="Search">
                         </button>
                     </form>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const form = document.querySelector('.HeaderSearch-form');
-                            const select = document.getElementById('productCatSelect');
-
-                            form.addEventListener('submit', function () {
-                                if (select.value) {
-                                    select.setAttribute('name', 'product_cat');
-                                } else {
-                                    select.removeAttribute('name');
-                                }
-                            });
-                        });
-                    </script>
 
                 </div>
 
@@ -217,7 +188,7 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
                 </div>
 
                 <div class="Drawer-body">
-                    <?php wp_nav_menu($menu_arg);?>
+                    <?php wp_nav_menu($menu_arg); ?>
                 </div>
             </div>
         </div>
