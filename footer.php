@@ -26,6 +26,10 @@ $x = get_theme_mod('x_link');
 $phone = get_theme_mod('phone_number');
 $email = get_theme_mod('email_address');
 $address = get_theme_mod('physical_address');
+
+$quick_links_arg = array('menu' => 'Quick Links', 'menu_class' => 'Navbar-nav-quickLinks Widget-list', 'menu_id' => 'Navbar-nav-quickLinks', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Navbar-item', 'add_a_class' => 'Navbar-link');
+$company_links_arg = array('menu' => 'Company Links', 'menu_class' => 'Navbar-nav-companyLinks Widget-list', 'menu_id' => 'Navbar-nav-companyLinks', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Navbar-item', 'add_a_class' => 'Navbar-link');
+
 ?>
 
 <?php if (!is_404()): ?>
@@ -56,23 +60,7 @@ $address = get_theme_mod('physical_address');
                             <span>Quick links</span>
                         </div>
 
-                        <ul class="Widget-list">
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Home</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Blog</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">About</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Compare</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Furniture</a>
-                            </li>
-                        </ul>
+                        <?php wp_nav_menu($quick_links_arg); ?>
                     </div>
                 </div>
 
@@ -82,20 +70,7 @@ $address = get_theme_mod('physical_address');
                             <span>Company</span>
                         </div>
 
-                        <ul class="Widget-list">
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Terms & Conditions</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Privacy Policy</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">FAQs</a>
-                            </li>
-                            <li class="Widget-item">
-                                <a href="#" class="Widget-link">Contact us</a>
-                            </li>
-                        </ul>
+                        <?php wp_nav_menu($company_links_arg); ?>
                     </div>
                 </div>
 
@@ -165,6 +140,27 @@ $address = get_theme_mod('physical_address');
 <?php endif; ?>
 
 <?php wp_footer(); ?>
+
+<script>
+    jQuery(function ($) {
+        function refreshCartBadge() {
+            $.ajax({
+                url: wc_cart_params.ajax_url,
+                type: 'POST',
+                data: { action: 'woocommerce_get_refreshed_fragments' },
+                success: function (data) {
+                    if (data && data.fragments) {
+                        $.each(data.fragments, function (key, value) {
+                            $(key).replaceWith(value);
+                        });
+                    }
+                }
+            });
+        }
+
+        $(document.body).on('added_to_cart removed_from_cart updated_wc_div', refreshCartBadge);
+    });
+</script>
 
 </body>
 

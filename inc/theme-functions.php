@@ -15,6 +15,9 @@ if (!class_exists('ThemeFunctions')) {
             // NEW: Sub heading meta box for stories
             add_action('add_meta_boxes', [__CLASS__, 'add_story_subheading_box']);
             add_action('save_post', [__CLASS__, 'save_story_subheading']);
+
+            // NEW: force archive-product.php for product searches
+            add_filter('template_include', [__CLASS__, 'force_product_search_template']);
         }
 
         /**
@@ -170,6 +173,28 @@ if (!class_exists('ThemeFunctions')) {
                     sanitize_text_field($_POST['story_sub_heading'])
                 );
             }
+        }
+
+        public static function force_product_search_template($template)
+        {
+            if (is_search() && isset($_GET['post_type']) && $_GET['post_type'] === 'product') {
+                $wc_template = wc_locate_template('archive-product.php');
+                if ($wc_template)
+                    return $wc_template;
+            }
+
+            // Case 2: Product category filter via GET param
+            if (isset($_GET['product_cat']) && !is_admin()) {
+                // Only if the current page is shop or home with GET param
+                $shop_id = wc_get_page_id('shop');
+                if (is_page($shop_id) || is_home() || is_front_page()) {
+                    $wc_template = wc_locate_template('archive-product.php');
+                    if ($wc_template)
+                        return $wc_template;
+                }
+            }
+
+            return $template;
         }
 
         /**
