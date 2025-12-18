@@ -3,13 +3,12 @@
 Template Name: Blog
 Template Post Type: page
 */
-
+/*
 get_header();
 
 $base_url = site_url();
 $template_uri = get_template_directory_uri();
 
-?>
 
 <section class="Block-root Blog-root">
     <div class="Container-root">
@@ -163,4 +162,4 @@ $template_uri = get_template_directory_uri();
     </div>
 </section>
 
-<?php get_footer(); ?>
+<?php get_footer(); */ ?>
