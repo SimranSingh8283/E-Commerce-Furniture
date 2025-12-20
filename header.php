@@ -123,18 +123,26 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
                             });
                         </script>
                         
-                        <div class="cart-badge-wrapper">
+                        <div class="cart-badge-wrapper header-cart-badge">
                             <?php $count = WC()->cart->get_cart_contents_count(); ?>
+
                             <?php
-                            $tooltip_text = $count === 0 ? 'Your cart is empty' : ($count === 1 ? '1 item in your cart' : "$count items in your cart");
+                            $tooltip_text = $count === 0
+                                ? 'Your cart is empty'
+                                : ($count === 1 ? '1 item in your cart' : "$count items in your cart");
                             ?>
-                            <div class="Badge-root" data-value="<?php echo $count; ?>">
-                                <a data-tooltip="<?php echo esc_attr($tooltip_text); ?>" href="<?php echo wc_get_cart_url(); ?>"
-                                class="Button-root Button-icon Button-shop cart-button">
-                                    <img src="<?= $template_uri ?>/assets/media/shopping-cart.svg" alt="">
+
+                            <div class="Badge-root" data-value="<?php echo esc_attr($count); ?>">
+                                <a
+                                    href="<?php echo esc_url(wc_get_cart_url()); ?>"
+                                    data-tooltip="<?php echo esc_attr($tooltip_text); ?>"
+                                    class="Button-root Button-icon Button-shop cart-button"
+                                >
+                                    <img src="<?php echo esc_url($template_uri); ?>/assets/media/shopping-cart.svg" alt="Cart">
                                 </a>
                             </div>
                         </div>
+
 
                         <Button class="Button-root Button-icon Button-shop Button-menu" data-drawer="#Drawer-menu">
                             <iconify-icon icon="material-symbols:menu-rounded"></iconify-icon>

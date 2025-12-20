@@ -143,6 +143,7 @@ $company_links_arg = array('menu' => 'Company Links', 'menu_class' => 'Navbar-na
 
 <script>
     jQuery(function ($) {
+        if (typeof wc_cart_params === 'undefined') return;
         function refreshCartBadge() {
             $.ajax({
                 url: wc_cart_params.ajax_url,
@@ -159,6 +160,30 @@ $company_links_arg = array('menu' => 'Company Links', 'menu_class' => 'Navbar-na
         }
 
         $(document.body).on('added_to_cart removed_from_cart updated_wc_div', refreshCartBadge);
+    });
+
+    jQuery(function ($) {
+
+        $(document.body).on('adding_to_cart', function (e, button) {
+            $(button).addClass('Button-loading');
+        });
+
+        $(document.body).on('added_to_cart', function (e, fragments, cart_hash, button) {
+            $(button)
+                .removeClass('Button-loading loading')
+                .addClass('Button-cart-added');
+        });
+
+        $(document.body).on('wc_fragments_refreshed', function () {
+            $('.Product-addToCart')
+                .removeClass('Button-loading loading');
+        });
+
+        $(document).ajaxComplete(function () {
+            $('.Product-addToCart')
+                .removeClass('Button-loading loading');
+        });
+
     });
 </script>
 

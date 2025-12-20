@@ -2,6 +2,7 @@
 @import url(./base.css);
 @import url(./flexSystem.css);
 @import url(./easings.css);
+@import url(./post-single.css);
 
 @layer General, Presets, Utils, Container, FlexSystem, Block, Button, Scroller;
 
@@ -25,7 +26,7 @@
     --clamp-sub-title: clamp(0.975rem, 1.05vw + 0.25rem, 1.15rem);
     --clr-black: #000;
     --clr-dark: #101010;
-    --clr-body: #303030;
+    --clr-body: #676468;
     --clr-white: #fff;
     --clr-gray: #808080;
     --clr-gray-100: #f8f8f8;
@@ -837,8 +838,7 @@ input[type=number] {
 }
 .Drawer-menu .Drawer-body .Navbar-nav li a:not([aria-current="page"]) {
     font-weight: 500;
-    opacity: 0.35;
-    color: inherit;
+    color: var(--clr-gray-700);
 }
 /*=====  End of BLock-header  ======*/
 
@@ -1064,3 +1064,171 @@ input[type=number] {
 }
 
 /*=====  End of Block- Footer  ======*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Products */
+
+.Products-root .Products-wrapper {
+    display: grid;
+    gap: 2.5rem;
+}
+.Products-root .Products-sale {
+    min-width: 0;
+}
+.Products-root .Products-saleSwiper {
+    contain: layout;
+}
+.Products-root .Products-saleSwiper .Products-swiper-controls > * {
+    position: absolute;
+    inset: 3rem;
+    margin-block: auto;
+    z-index: 99;
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    padding: 0;
+    background-color: var(--clr-white);
+}
+.Products-root .Products-saleSwiper .Products-swiper-controls .Button-next {
+    left: auto;
+}
+.Products-root .Products-saleSwiper .Products-swiper-controls iconify-icon {
+    font-size: 2.5rem;
+}
+.Products-root .Products-categories .CategoryCard {
+    display: block;
+    background: unset;
+    contain: paint;
+    border-radius: 1rem;
+    height: 100%;
+}
+.Products-root .Products-categories .CategoryCard img {
+    transition: 1s scale cubic-bezier(0.175, 0.82, 0.165, 1);
+    width: 100%;
+}
+.Products-root .Products-categories .CategoryCard:hover img {
+    scale: 1.25;
+}
+.Products-root .Products-categories .CategoryCard span {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 0.5em 1em;
+    color: var(--clr-primary-light);
+    background-color: hsl(0, 0%, 0%, 20%);
+    backdrop-filter: blur(0.15rem);
+    text-align: center;
+    transition: 1s background-color cubic-bezier(0.175, 0.82, 0.165, 1);
+}
+.Products-root .Products-categories .CategoryCard:hover span {
+    background-color: hsl(0, 0%, 0%, 40%);
+}
+.Products-root .Products-categories .CategoryCard.CategoryCard--big span {
+    font-size: clamp(1rem, 1.25vw + 0.25rem, 1.25rem);
+}
+
+
+.Products-saleSwiper .ProductCard {
+    display: grid;
+    border-radius: 1rem;
+    contain: paint;
+    align-items: end;
+    text-align: center;
+}
+.Products-saleSwiper .ProductCard > * {
+    grid-area: 1 / -1;
+}
+.Products-saleSwiper .ProductCard img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+.Products-saleSwiper .ProductCard-actions {
+    margin-bottom: 3rem;
+}
+.Products-saleSwiper .ProductCard-actions .Button-root {
+    width: min(100%, 400px);
+}
+
+
+.SearchProducts-header .result {
+    background-color: var(--clr-primary-light);
+    padding: 0.5em 1em;
+    border-left: 0.25em solid var(--clr-primary-main);
+}
+
+.Products--grid .Product-root {
+    contain: layout;
+    transition: all 300ms ease;
+}
+.Products--grid .Product-root:hover {
+    filter: brightness(0.95);
+}
+.Products--grid .Product-root .Product-thumbnail {
+    contain: paint;
+}
+.Products--grid .Product-root .Product-thumbnail img{
+    width: 100%;
+    scale: 1.05;
+    transition: 1s all cubic-bezier(0.145, 0.88, 0.122, 1);
+}
+.Products--grid .Product-root:hover .Product-thumbnail img{
+    scale: 1;
+}
+.Products--grid .Product-root .Product-overlay {
+    position: absolute;
+    inset: 15%;
+    transition: 1s all cubic-bezier(0.145, 0.88, 0.122, 1);
+    background-color: hsl(0, 0%, 0%, 5%);
+    scale: 0.5;
+    opacity: 0;
+    backdrop-filter: blur(0.5rem);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+.Products--grid .Product-root .Product-overlay > * {
+    scale: 0.5;
+    opacity: 0;
+    transition: 1s all cubic-bezier(0.145, 0.88, 0.122, 1);
+    transition-delay: 0.15s;
+}
+.Products--grid .Product-root:hover :is(.Product-overlay, .Product-overlay > *) {
+    scale: 1;
+    opacity: 1;
+}
+
+.Products--grid .Product-root .Product-wishlist {
+    position: absolute;
+    inset: 1rem 1rem auto auto;
+    z-index: 999;
+    font-size: 1.5rem;
+}
+
+.Products--grid .Product-root .Product-title {
+    font-size: var(--clamp-sub-title);
+    font-weight: 600;
+    color: var(--clr-primary-text);
+}
+
+.Products--grid .Product-root .Product-action .added_to_cart {
+    display: none !important;
+}
+
+.added_to_cart {
+    display: block;
+    margin-top: 1rem;
+    color: var(--clr-primary-text);
+}

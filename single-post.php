@@ -1,4 +1,13 @@
 <?php
 get_header();
-get_template_part('templates/posts/single');
+
+if (have_posts()) :
+    while (have_posts()) :
+        the_post();
+
+        get_template_part('template-parts/post/single');
+
+    endwhile;
+endif;
+
 get_footer();

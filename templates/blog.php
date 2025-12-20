@@ -3,11 +3,11 @@
 Template Name: Blog
 Template Post Type: page
 */
-/*
 get_header();
 
 $base_url = site_url();
 $template_uri = get_template_directory_uri();
+?>
 
 
 <section class="Block-root Blog-root">
@@ -93,61 +93,9 @@ $template_uri = get_template_directory_uri();
                 <?php while ($blog_query->have_posts()):
                     $blog_query->the_post(); ?>
                     <div class="Col-root Col-lg-4">
-                        <article class="Post-root">
-
-                            <div class="Post-thumb">
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php if (has_post_thumbnail()): ?>
-                                        <?php the_post_thumbnail('medium_large'); ?>
-                                    <?php endif; ?>
-                                </a>
-                            </div>
-
-                            <div class="Post-content">
-
-                                <div class="Post-meta">
-
-                                    <?php
-                                    if (empty($_GET['blog_tag'])):
-
-                                        $post_tags = get_the_tags();
-
-                                        if ($post_tags):
-                                            ?>
-                                            <span class="Post-tags">
-                                                <?php foreach ($post_tags as $tag): ?>
-                                                    <span class="Post-tag">
-                                                        <?php echo esc_html($tag->name); ?>
-                                                    </span>
-                                                <?php endforeach; ?>
-                                            </span>
-                                            <?php
-                                        endif;
-                                    endif;
-                                    ?>
-
-                                    <span class="Post-date">
-                                        <?php echo get_the_date('M d, Y'); ?>
-                                    </span>
-
-                                </div>
-
-                                <h3 class="Post-title">
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php the_title(); ?>
-                                    </a>
-                                </h3>
-
-                                <div class="Post-desc">
-                                    <?php echo wp_trim_words(get_the_excerpt(), 22); ?>
-                                </div>
-
-                                <a href="<?php the_permalink(); ?>" class="Post-link">Learn more <iconify-icon
-                                        icon="line-md:arrow-right"></iconify-icon> </a>
-
-                            </div>
-
-                        </article>
+                        <?php
+                            get_template_part('template-parts/post/card');
+                        ?>
                     </div>
 
                 <?php endwhile; ?>
@@ -162,4 +110,4 @@ $template_uri = get_template_directory_uri();
     </div>
 </section>
 
-<?php get_footer(); */ ?>
+<?php get_footer(); ?>

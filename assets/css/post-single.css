@@ -1,0 +1,167 @@
+.PostSingle-header .Post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.PostSingle-header .Post-tags {
+    color: var(--clr-primary-main);
+    font-weight: 500;
+}
+.PostSingle-header .Post-date {
+    opacity: 0.5;
+}
+.PostSingle-header .Post-title {
+    font-size: var(--clamp-title);
+    font-weight: 700;
+    text-wrap: pretty;
+    margin-block: 0.725em;
+}
+
+
+
+
+
+.PostSingle-thumbnail {
+    margin-block: 3rem;
+    border-radius: 1rem;
+    contain: paint;
+}
+.PostSingle-thumbnail img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: 300ms ease;
+}
+.PostSingle-thumbnail:hover img {
+    scale: 1.15;
+}
+
+
+
+
+
+.PostSingle-content {
+    font-size: 1.25rem;
+    color: var(--clr-body);
+    font-weight: 500;
+}
+.PostSingle-content :is(h2,h3,h4,h5,h6) {
+    color: var(--clr-primary-text);
+    font-size: clamp(1.5rem, 1.75vw + 0.5rem, 32px);
+    margin-block: 1.25em 0.5em;
+    font-weight: 500;
+}
+
+
+
+
+
+.PostSingle-meta {
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-block: 2rem;
+    padding-block: 2rem;
+    border-block: 1px solid var(--clr-auto);
+}
+.PostSingle-meta .PostMeta-author {
+    display: flex;
+    gap: 1rem;
+    background-image: unset;
+    align-items: center;
+}
+.PostSingle-meta .PostMeta-avatar {
+    border-radius: 50%;
+    contain: paint;
+}
+.PostSingle-meta .PostMeta-avatar img {
+    width: 50px;
+    aspect-ratio: 1;
+    height: auto;
+}
+.PostSingle-meta .PostMeta-name {
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+}
+.PostSingle-meta .PostMeta-date {
+    opacity: 0.5;
+}
+
+
+
+
+
+.PostComments-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+.PostComments-header select {
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: 1px solid currentColor;
+    margin-left: 1rem;
+}
+
+.PostComments-list .Comment-root {
+    margin-block-end: 3rem;
+    padding-block-end: 3rem;
+    border-bottom: 1px solid var(--clr-auto);
+}
+.Comment-root .Comment-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-block-end: 1.5rem;
+}
+.Comment-root .Comment-author .Comment-avatar {
+    border-radius: 50%;
+    contain: paint;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.PostComments-footer .logged-in-as {
+    padding: 0.5em 1em;
+    border-left: 0.25em solid var(--clr-primary-main);
+    margin-block: 1em;
+    background-color: hsl(var(--clr-primary-hsl), 10%);
+}
+.PostComments-footer .logged-in-as a {
+    font-weight: 600;
+}
+
+.PostComments-footer textarea {
+    font-family: var(--font-body);
+    padding: 1em;
+    display: block;
+    width: 100%;
+    border-radius: 1em;
+    border: 1px solid var(--clr-border);
+}
+.PostComments-footer textarea:is(:hover, :focus) {
+    border-color: var(--clr-primary-main);
+}
+.PostComments-footer .form-submit {
+    text-align: right;
+    margin-block-start: 2rem;
+}
+
+
+
+
+.PostSingle-related {
+    margin-top: 3rem;
+}
+
+
+
+
+.PostSingle-newsletter {
+    margin-top: 2rem;
+}

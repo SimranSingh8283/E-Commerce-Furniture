@@ -24,7 +24,7 @@
     body {
         font-family: var(--font-body);
         font-weight: 400;
-        color: var(--clr-primary-text);
+        color: var(--clr-body);
         background-color: var(--body-bg);
         letter-spacing: 0.15px;
         line-height: 1.5;
@@ -34,6 +34,7 @@
         font-family: var(--font-title);
         line-height: 1.25;
         font-weight: 400;
+        color: var(--clr-primary-text);
     }
 
     a:any-link {
@@ -173,6 +174,10 @@
         color: var(--clr-secondary-text);
     }
 
+    .Block-heading {
+        color: var(--clr-primary-text);
+    }
+
     .Block-heading:not(:only-child, :last-child):not([data-level="2"]) {
         margin-block-end: 1rem;
     }
@@ -190,14 +195,14 @@
         letter-spacing: 0;
     }
 
-    .Block-heading > [data-level="1"] {
+    .Block-heading>[data-level="1"] {
         font-size: var(--clamp-title);
         font-weight: 600;
         text-transform: capitalize;
         text-wrap: balance;
     }
 
-    .Block-heading > [data-level="2"] {
+    .Block-heading>[data-level="2"] {
         font-size: var(--clamp-sub-title);
         font-weight: 500;
         color: #CD9265;
@@ -575,8 +580,32 @@
         font-size: 1.25em;
     }
 
+    .Button-root:is([disabled], .Button-disabled) {
+        pointer-events: none;
+        background-color: var(--clr-gray-400) !important;
+        color: var(--clr-primary-text) !important;
+        user-select: none;
+    }
+
     .Button-root>* {
         pointer-events: none;
+    }
+
+    .Button-loading {
+        background-color: var(--clr-gray-400) !important;
+    }
+
+    .Button-loading>:not(.Button-loader) {
+        color: transparent;
+    }
+
+    .Button-loader {
+        color: var(--clr-primary-text);
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: max-content;
+        height: max-content;
     }
 
     [data-group="btns"] {

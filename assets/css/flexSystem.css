@@ -39,7 +39,7 @@
     .Flex-root {
         --gap: 1.5rem;
         display: flex;
-        gap: var(--gap) calc(var(--gap) * 2);
+        gap: var(--gap);
     }
 
     .Flex-root.Flex-wrap {
@@ -69,7 +69,7 @@
     }
 
     .Col-root[class*="Col-"] {
-        flex: 0 1 calc((100% / var(--columns)) - calc(var(--gap) * 2) * (var(--columns) - 1) / var(--columns));
+        flex: 0 1 calc((100% / var(--columns)) - var(--gap) * (var(--columns) - 1) / var(--columns));
         min-width: 0;
     }
 

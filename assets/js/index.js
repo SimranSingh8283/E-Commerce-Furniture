@@ -600,4 +600,44 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("pointerup", cleanUp);
         button.addEventListener("pointerleave", cleanUp);
     };
+
+    const buttonLoaderObserver = new MutationObserver(mutations => {
+        mutations.forEach(m => {
+            if (m.type !== 'attributes' || m.attributeName !== 'class') return;
+
+            const target = m.target;
+
+            if (!target.querySelector('.Button-loader') && target.classList.contains('Button-loading')) {
+                const loader = document.createElement('div');
+                loader.className = "Button-loader";
+
+                const spinner = document.createElement('iconify-icon');
+                spinner.setAttribute('icon', 'svg-spinners:ring-resize');
+
+                loader.appendChild(spinner);
+                target.appendChild(loader);
+                target.setAttribute('disabled', 'true');
+            } else if (!target.classList.contains('Button-loading')) {
+                const loader = target.querySelector('.Button-loader');
+                if (loader) loader.remove();
+                target.removeAttribute('disabled');
+            }
+        });
+    });
+
+    if (elements) {
+        elements.forEach(btn => buttonLoaderObserver.observe(btn, { attributes: true }));
+    }
+
+    const bodyObserver = new MutationObserver(mutations => {
+        mutations.forEach(m => {
+            m.addedNodes.forEach(node => {
+                if (!(node instanceof HTMLElement)) return;
+                const newBtns = node.querySelectorAll('.Button-root');
+                newBtns.forEach(btn => buttonLoaderObserver.observe(btn, { attributes: true }));
+            });
+        });
+    });
+
+    bodyObserver.observe(document.body, { childList: true, subtree: true });
 });
