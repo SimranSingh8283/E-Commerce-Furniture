@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $btn.find('.Button-text').text('View Cart');
 
+        const $icon = $btn.find('iconify-icon');
+        if ($icon.length) {
+            $icon.attr('icon', 'mdi:cart');
+        }
+
         $btn.removeClass('ajax_add_to_cart add_to_cart_button')
             .addClass('Button-cart-added');
 

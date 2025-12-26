@@ -176,6 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
             direction: 'vertical'
         });
 
+        window.lenis = lenis;
+
         lenis.on('scroll', (e) => {
             updateHeaderScrolled(e.scroll);
         });
@@ -237,6 +239,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
             requestAnimationFrame(rafDiv);
         })
+
+        scrollableEls.forEach((el) => {
+            el.addEventListener(
+                "wheel",
+                (e) => {
+                    const atTop = el.scrollTop === 0;
+                    const atBottom =
+                        el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+
+                    if ((e.deltaY < 0 && atTop) || (e.deltaY > 0 && atBottom)) {
+                        const wheelEvent = new WheelEvent("wheel", {
+                            deltaY: e.deltaY,
+                            deltaX: e.deltaX,
+                            bubbles: true,
+                            cancelable: true,
+                            composed: true,
+                        });
+
+                        document.dispatchEvent(wheelEvent);
+                        e.preventDefault();
+                    }
+                },
+                { passive: false }
+            );
+        });
+
     }
 
 

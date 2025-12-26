@@ -32,7 +32,7 @@ $company_links_arg = array('menu' => 'Company Links', 'menu_class' => 'Navbar-na
 
 ?>
 
-<?php if (!is_404()): ?>
+<?php if (!ThemeFunctions::hide_layout_elements()): ?>
     </main>
 
     <footer id="Footer-root" class="Footer-root" aria-label="Site footer with quick-links and contact information">

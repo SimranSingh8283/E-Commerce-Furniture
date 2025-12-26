@@ -3,11 +3,17 @@
 Template Name: Products
 Template Post Type: page
 */
-get_header();
+
+if (isset($_GET['prod_search']) && trim($_GET['prod_search']) === '') {
+    wp_safe_redirect(remove_query_arg('prod_search'));
+    exit;
+}
+
+get_header('shop');
 
 $collection = isset($_GET['collection'])
     ? sanitize_text_field($_GET['collection'])
-    : 'best_selling';
+    : 'all';
 ?>
 
 <section class="Block-root Block-products Products-root">
@@ -29,59 +35,4 @@ $collection = isset($_GET['collection'])
     </div>
 </section>
 
-<script>
-document.addEventListener('click', function (e) {
-    const chip = e.target.closest('.ProductsCollection-chips .Chip');
-    if (!chip) return;
-
-    const wrapper = document.querySelector('.Products-collection');
-    const collection = chip.dataset.collection;
-
-    const url = new URL(window.location);
-    url.searchParams.set('collection', collection);
-    history.pushState({}, '', url);
-
-    wrapper.classList.add('is-loading');
-
-    fetch('<?php echo esc_url(admin_url('admin-ajax.php')); ?>', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-            action: 'load_product_collection',
-            collection
-        })
-    })
-    .then(res => res.json())
-    .then(res => {
-        if (res.success) {
-            wrapper.innerHTML = res.data;
-        }
-        wrapper.classList.remove('is-loading');
-    });
-});
-
-window.addEventListener('popstate', function () {
-    const collection = new URLSearchParams(window.location.search).get('collection') || 'best_selling';
-    const wrapper = document.querySelector('.Products-collection');
-
-    wrapper.classList.add('is-loading');
-
-    fetch('<?php echo esc_url(admin_url('admin-ajax.php')); ?>', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-            action: 'load_product_collection',
-            collection
-        })
-    })
-    .then(res => res.json())
-    .then(res => {
-        if (res.success) {
-            wrapper.innerHTML = res.data;
-        }
-        wrapper.classList.remove('is-loading');
-    });
-});
-</script>
-
-<?php get_footer(); ?>
+<?php get_footer('shop'); ?>

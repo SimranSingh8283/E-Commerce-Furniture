@@ -19,6 +19,11 @@ if (!class_exists('ThemeFunctions')) {
             add_action('pre_get_comments', [__CLASS__, 'sort_comments_by_dropdown']);
         }
 
+        public static function hide_layout_elements()
+        {
+            return is_404() || (is_account_page() && !is_user_logged_in());
+        }
+
         public static function comment_markup($comment, $args, $depth)
         {
             $tag = ($args['style'] === 'div') ? 'div' : 'li';
@@ -107,6 +112,14 @@ if (!class_exists('ThemeFunctions')) {
                 $wc_template = wc_locate_template('archive-product.php');
                 if ($wc_template)
                     return $wc_template;
+            }
+
+            if (is_shop() && !is_admin()) {
+
+                $wc_template = wc_locate_template('archive-product.php');
+                if ($wc_template) {
+                    return $wc_template;
+                }
             }
 
             // Case 2: Product category filter via GET param

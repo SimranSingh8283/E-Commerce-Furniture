@@ -23,7 +23,7 @@
 
     body {
         font-family: var(--font-body);
-        font-weight: 400;
+        font-weight: 500;
         color: var(--clr-body);
         background-color: var(--body-bg);
         letter-spacing: 0.15px;
@@ -33,7 +33,6 @@
     :is(h1, h2, h3, h4, h5, h6) {
         font-family: var(--font-title);
         line-height: 1.25;
-        font-weight: 400;
         color: var(--clr-primary-text);
     }
 
@@ -176,6 +175,7 @@
 
     .Block-heading {
         color: var(--clr-primary-text);
+        font-family: var(--font-title);
     }
 
     .Block-heading:not(:only-child, :last-child):not([data-level="2"]) {
@@ -298,7 +298,7 @@
         }
 
         .Block-static.Block-static .Block-row {
-            column-gap: var(--_gap);
+            column-gap: var(--_gap) !important;
         }
 
         .Block-static.Block-static:not(.Block-offset-y) .Block-row>*:not(.Block-object) {
@@ -566,6 +566,7 @@
     .Button-root[class*="Button-icon-"] {
         display: flex;
         gap: 1rem;
+        justify-content: center;
     }
 
     .Button-root.Button-icon:hover {

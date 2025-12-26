@@ -73,6 +73,54 @@
         min-width: 0;
     }
 
+    .Col-1 {
+        --columns: 12;
+    }
+
+    .Col-2 {
+        --columns: 6;
+    }
+
+    .Col-3 {
+        --columns: 4;
+    }
+
+    .Col-4 {
+        --columns: 3;
+    }
+
+    .Col-5 {
+        --columns: 2.4;
+    }
+
+    .Col-6 {
+        --columns: 2;
+    }
+
+    .Col-7 {
+        --columns: 1.71;
+    }
+
+    .Col-8 {
+        --columns: 1.5;
+    }
+
+    .Col-9 {
+        --columns: 1.33;
+    }
+
+    .Col-10 {
+        --columns: 1.2;
+    }
+
+    .Col-11 {
+        --columns: 1.09;
+    }
+
+    .Col-12 {
+        --columns: 1;
+    }
+
     @media (min-width: 576px) {
         .Col-sm-1 {
             --columns: 12;

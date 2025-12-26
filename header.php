@@ -46,7 +46,7 @@ $menu_arg = array('menu' => 'Header Menu', 'menu_class' => 'Navbar-nav', 'menu_i
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
 
-    <?php if (!is_404()): ?>
+    <?php if (!ThemeFunctions::hide_layout_elements()): ?>
         <header id="Header-root" class="Header-root" data-aos="slide-down"
             aria-label="Main Navigation with contact information">
             <div class="Container-root">

@@ -1,0 +1,103 @@
+.Table-root {
+    width: 100%;
+    border-spacing: 0;
+    text-align: left;
+    border-radius: 1rem;
+    contain: paint;
+    box-shadow: 0.05rem 0.05rem 0.5rem hsl(0, 0%, 0%, 10%);
+}
+
+.Cart-table .Table-head {
+    background-color: var(--clr-primary-main);
+    color: var(--clr-primary-light);
+}
+
+.Cart-table .Table-cell {
+    padding: 1em 1.5em;
+}
+
+.Cart-table .Table-productCell {
+    max-width: 200px;
+}
+
+.Cart-table .Table-productCell .Table-cell {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+}
+
+.Cart-table .Cart-thumbnail img {
+    max-width: 180px;
+}
+
+.Cart-table .Table-quantityCell .Table-quantityWrapper {
+    background-color: var(--clr-primary-light);
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    max-width: max-content;
+    border-radius: 100vmax;
+    contain: paint;
+}
+.Cart-table .Table-quantityCell .Table-quantityWrapper .quantity {
+    height: 100%;
+    padding-block: 0.5rem;
+}
+.Cart-table .Table-quantityCell .Table-quantityWrapper input {
+    border: 0;
+    height: 100%;
+    background-color: transparent;
+    border-inline: 1px solid hsl(var(--clr-primary-hsl), 50%);
+}
+.Cart-table .Table-quantityCell .Table-quantityWrapper .Button-root {
+    border-radius: 0;
+}
+
+.Cart-table .Table-row {
+    transition: 200ms ease;
+}
+.Cart-table .Table-row:not(:last-child) {
+    box-shadow: 0 1px hsl(var(--clr-primary-hsl), 15%);
+}
+
+.Cart-table .Table-row:hover {
+    background-color: hsl(var(--clr-primary-hsl), 5%);
+}
+
+
+.Cart-summary {
+    margin-top: 3rem;
+    background-color: var(--clr-primary-light);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    contain: paint;
+}
+.Summary-root {
+    border-top: 1px solid hsl(var(--clr-primary-hsl), 20%);
+    padding-top: 1.5rem;
+    display: grid;
+    gap: 1.5rem;
+}
+.Summary-root .Shipping-loading {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    align-content: center;
+    background-color: hsl(0, 0%, 100%, 20%);
+    backdrop-filter: blur(0.5rem);
+}
+.Summary-root .Summary-item {
+    display: flex;
+    justify-content: space-between;
+}
+.Summary-root .Summary-item >:first-child {
+    font-weight: 600;
+}
+.Summary-root .Summary-item:last-child {
+    border-top: 1px solid hsl(var(--clr-primary-hsl), 20%);
+    padding-top: 1.5rem;
+}
+.Cart-action {
+    text-align: right;
+}
