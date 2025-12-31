@@ -394,7 +394,7 @@
         color: var(--clr-black);
         font-size: 1rem;
         font-weight: 600;
-        padding: calc(var(--_size) * 1.35) calc(var(--_size) * 3);
+        padding: calc(var(--_size) * 1.121) calc(var(--_size) * 2.95);
         display: inline-block;
         text-align: center;
         border: 0;
@@ -498,7 +498,7 @@
     }
 
     .Button-root.Button-primary[data-variant="outlined"]:not([data-ripple]):hover {
-        background-color: hsl(160, 98%, 25%, 10%);
+        background-color: hsl(var(--clr-primary-hsl), 10%);
         backdrop-filter: blur(0.5em);
     }
 

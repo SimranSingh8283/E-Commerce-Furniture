@@ -106,6 +106,7 @@ function default_post_slider_shortcode($atts)
                             if (!empty($atts['category']) && $atts['category'] === 'stories') {
 
                                 $sub = get_post_meta(get_the_ID(), '_story_sub_heading', true);
+                                $heading = get_field("heading");
 
                                 if (!empty($sub)) { ?>
                                     <span aria-level="2" data-level="2">
@@ -115,7 +116,7 @@ function default_post_slider_shortcode($atts)
                             }
                             ?>
 
-                            <span aria-level="1" data-level="1"><?php the_title(); ?></span>
+                            <span aria-level="1" data-level="1"><?php echo wp_kses_post($heading); ?></span>
                         </div>
                     </div>
 

@@ -1,21 +1,3 @@
-.Table-root {
-    width: 100%;
-    border-spacing: 0;
-    text-align: left;
-    border-radius: 1rem;
-    contain: paint;
-    box-shadow: 0.05rem 0.05rem 0.5rem hsl(0, 0%, 0%, 10%);
-}
-
-.Cart-table .Table-head {
-    background-color: var(--clr-primary-main);
-    color: var(--clr-primary-light);
-}
-
-.Cart-table .Table-cell {
-    padding: 1em 1.5em;
-}
-
 .Cart-table .Table-productCell {
     max-width: 200px;
 }
@@ -52,17 +34,6 @@
 }
 .Cart-table .Table-quantityCell .Table-quantityWrapper .Button-root {
     border-radius: 0;
-}
-
-.Cart-table .Table-row {
-    transition: 200ms ease;
-}
-.Cart-table .Table-row:not(:last-child) {
-    box-shadow: 0 1px hsl(var(--clr-primary-hsl), 15%);
-}
-
-.Cart-table .Table-row:hover {
-    background-color: hsl(var(--clr-primary-hsl), 5%);
 }
 
 

@@ -30,6 +30,27 @@ $address = get_theme_mod('physical_address');
 $quick_links_arg = array('menu' => 'Quick Links', 'menu_class' => 'Navbar-nav-quickLinks Widget-list', 'menu_id' => 'Navbar-nav-quickLinks', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Navbar-item', 'add_a_class' => 'Navbar-link');
 $company_links_arg = array('menu' => 'Company Links', 'menu_class' => 'Navbar-nav-companyLinks Widget-list', 'menu_id' => 'Navbar-nav-companyLinks', 'container' => 'ul', 'container_class' => '', 'container_id' => '', 'add_li_class' => 'Navbar-item', 'add_a_class' => 'Navbar-link');
 
+
+$socials = [
+    'facebook' => [
+        'url' => $fb ?? '',
+        'icon' => 'line-md:facebook'
+    ],
+    'x' => [
+        'url' => $x ?? '',
+        'icon' => 'line-md:twitter-x',
+    ],
+    'linkedin' => [
+        'url' => $li ?? '',
+        'icon' => 'line-md:linkedin',
+    ],
+    'instagram' => [
+        'url' => $insta ?? '',
+        'icon' => 'line-md:instagram',
+    ],
+];
+
+$has_socials = array_filter(array_column($socials, 'url'));
 ?>
 
 <?php if (!ThemeFunctions::hide_layout_elements()): ?>
@@ -89,41 +110,20 @@ $company_links_arg = array('menu' => 'Company Links', 'menu_class' => 'Navbar-na
                     </div>
 
                     <div class="Widget-root Widget-socials">
-                        <?php if (!empty($insta) || !empty($fb)) { ?>
+                        <?php if (!empty($has_socials)): ?>
                             <ul class="Social-root">
-                                <?php if (!empty($fb)) { ?>
-                                    <li class="Social-item" data-aos="zoom-in">
-                                        <a class="Social-link" target="_blank" href="<?= $fb; ?>">
-                                            <iconify-icon icon=""></iconify-icon>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-
-                                <?php if (!empty($li)) { ?>
-                                    <li class="Social-item" data-aos="zoom-in">
-                                        <a class="Social-link" target="_blank" href="<?= $li; ?>">
-                                            <iconify-icon icon=""></iconify-icon>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-
-                                <?php if (!empty($x)) { ?>
-                                    <li class="Social-item">
-                                        <a class="Social-link" target="_blank" href="<?= $x; ?>">
-                                            <iconify-icon icon="line-md:twitter-x"></iconify-icon>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-
-                                <?php if (!empty($insta)) { ?>
-                                    <li class="Social-item" data-aos="zoom-in">
-                                        <a class="Social-link" target="_blank" href="<?= $insta; ?>">
-                                            <iconify-icon icon=""></iconify-icon>
-                                        </a>
-                                    </li>
-                                <?php } ?>
+                                <?php foreach ($socials as $network => $data): ?>
+                                    <?php if (!empty($data['url'])): ?>
+                                        <li class="Social-item" data-aos="zoom-in">
+                                            <a class="Social-link" href="<?= esc_url($data['url']); ?>" target="_blank"
+                                                rel="noopener noreferrer" aria-label="<?= esc_attr(ucfirst($network)); ?>">
+                                                <iconify-icon icon="<?= esc_attr($data['icon']); ?>"></iconify-icon>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </ul>
-                        <?php } ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
