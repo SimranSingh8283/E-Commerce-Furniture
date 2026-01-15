@@ -377,73 +377,87 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })();
 
-
     (function TooltipSystem() {
         let tooltipEl = null;
-        let hoveredTarget = null;
-        let tooltipTrigger = null; // 'hover' | 'focus'
+        let activeTarget = null;
         let showTimer = null;
         let hideTimer = null;
-        const SHOW_DELAY = 120; // ms before showing
-        const HIDE_DELAY = 80;  // ms before hiding
+
+        const SHOW_DELAY = 0;
+        const HIDE_DELAY = 80;
         const GAP = 8;
 
-        const closest = (el, sel) => el ? el.closest(sel) : null;
+        const closest = (el, sel) => el?.closest(sel) || null;
 
-        // Create tooltip
-        function createTooltip(message) {
+        function clearTimers() {
+            if (showTimer) clearTimeout(showTimer);
+            if (hideTimer) clearTimeout(hideTimer);
+            showTimer = hideTimer = null;
+        }
+
+        function destroyTooltip(immediate = false) {
+            clearTimers();
+            if (!tooltipEl) return;
+
+            const el = tooltipEl;
+            tooltipEl = null;
+            activeTarget = null;
+
+            el.classList.remove('Tooltip-show');
+
+            if (immediate) {
+                el.remove();
+            } else {
+                setTimeout(() => el.remove(), 160);
+            }
+        }
+
+        function createTooltip(target) {
+            const message = target.getAttribute('data-tooltip');
+            if (!message) return;
+
+            destroyTooltip(true); // HARD guarantee: one tooltip only
+
             const el = document.createElement('div');
             el.className = 'Tooltip-root';
             el.textContent = message;
             el.style.position = 'fixed';
-            el.style.top = '0px';
-            el.style.left = '0px';
+            el.style.top = '0';
+            el.style.left = '0';
             el.style.willChange = 'transform, opacity';
+
             document.body.appendChild(el);
             requestAnimationFrame(() => el.classList.add('Tooltip-show'));
-            return el;
+
+            tooltipEl = el;
+            activeTarget = target;
+
+            positionTooltip(target, el, target.getAttribute('data-position') || 'bottom');
         }
 
-        // Destroy tooltip immediately
-        function destroyTooltipImmediate() {
-            if (!tooltipEl) return;
-            tooltipEl.classList.remove('Tooltip-show');
-            const el = tooltipEl;
-            setTimeout(() => {
-                if (el && el.parentNode) el.parentNode.removeChild(el);
-            }, 160);
-            tooltipEl = null;
-            hoveredTarget = null;
-            tooltipTrigger = null;
-        }
-
-        // Safety destroy (clears timers)
-        function destroyTooltip() {
-            if (showTimer) { clearTimeout(showTimer); showTimer = null; }
-            if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
-            destroyTooltipImmediate();
-        }
-
-        // Position tooltip with auto-flip
-        function positionTooltip(target, tooltip, preferred = 'bottom') {
+        function positionTooltip(target, tooltip, preferred) {
             if (!target || !tooltip) return;
+
             const rect = target.getBoundingClientRect();
-            tooltip.style.left = '0px';
-            tooltip.style.top = '0px';
+            tooltip.style.left = '0';
+            tooltip.style.top = '0';
+
             const tRect = tooltip.getBoundingClientRect();
 
             const fits = {
                 top: rect.top >= tRect.height + GAP,
-                bottom: (window.innerHeight - rect.bottom) >= tRect.height + GAP,
+                bottom: innerHeight - rect.bottom >= tRect.height + GAP,
                 left: rect.left >= tRect.width + GAP,
-                right: (window.innerWidth - rect.right) >= tRect.width + GAP
+                right: innerWidth - rect.right >= tRect.width + GAP
             };
 
-            const placements = ['top', 'bottom', 'right', 'left'];
-            let placement = preferred;
-            if (!fits[placement]) placement = placements.find(p => fits[p]) || placement;
+            const order = ['top', 'bottom', 'right', 'left'];
+            const placement = fits[preferred]
+                ? preferred
+                : order.find(p => fits[p]) || preferred;
 
             let top = 0, left = 0;
+
             switch (placement) {
                 case 'top':
                     top = rect.top - tRect.height - GAP;
@@ -463,88 +477,69 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
             }
 
-            left = Math.max(6, Math.min(left, window.innerWidth - tRect.width - 6));
-            top = Math.max(6, Math.min(top, window.innerHeight - tRect.height - 6));
-
-            tooltip.style.left = `${Math.round(left)}px`;
-            tooltip.style.top = `${Math.round(top)}px`;
+            tooltip.style.left = `${Math.max(6, Math.min(left, innerWidth - tRect.width - 6))}px`;
+            tooltip.style.top = `${Math.max(6, Math.min(top, innerHeight - tRect.height - 6))}px`;
         }
 
-        // Track hover via mousemove (prevents click/drag duplication)
+        /* ======================
+           HOVER HANDLING
+           ====================== */
+
         document.addEventListener('mousemove', e => {
+            if (e.buttons) return;
+
             const target = closest(e.target, '[data-tooltip]');
+            if (target === activeTarget) return;
 
-            // Ignore if mouse button pressed
-            if (e.buttons > 0) return;
+            clearTimers();
 
-            if (target !== hoveredTarget) {
-                // Mouse left previous element
-                if (hoveredTarget && tooltipEl) destroyTooltip();
+            if (!target) {
+                hideTimer = setTimeout(() => destroyTooltip(), HIDE_DELAY);
+                return;
+            }
 
-                hoveredTarget = target;
-
-                if (target) {
-                    // Schedule tooltip show
-                    if (showTimer) clearTimeout(showTimer);
-                    showTimer = setTimeout(() => {
-                        const message = target.getAttribute('data-tooltip');
-                        if (!message) return;
-                        tooltipEl = createTooltip(message);
-                        tooltipTrigger = 'hover';
-                        positionTooltip(target, tooltipEl, target.getAttribute('data-position') || 'bottom');
-                    }, SHOW_DELAY);
+            showTimer = setTimeout(() => {
+                // verify cursor is STILL on the same target
+                if (closest(document.elementFromPoint(e.clientX, e.clientY), '[data-tooltip]') === target) {
+                    createTooltip(target);
                 }
-            }
+            }, SHOW_DELAY);
         });
 
-        // Hide tooltip when leaving element (or moving out quickly)
-        document.addEventListener('mouseout', e => {
-            if (!tooltipEl) return;
-            const from = closest(e.target, '[data-tooltip]');
-            const to = e.relatedTarget;
+        document.addEventListener('mouseleave', () => destroyTooltip(), true);
 
-            // Ignore moving to child
-            if (from && to && from.contains(to)) return;
+        /* ======================
+           FOCUS SUPPORT
+           ====================== */
 
-            if (hideTimer) clearTimeout(hideTimer);
-            hideTimer = setTimeout(() => destroyTooltip(), HIDE_DELAY);
-        });
-
-        // Reposition tooltip on scroll/resize
-        function onScrollResize() {
-            if (tooltipEl && hoveredTarget) {
-                positionTooltip(hoveredTarget, tooltipEl, hoveredTarget.getAttribute('data-position') || 'bottom');
-            }
-        }
-
-        window.addEventListener('scroll', onScrollResize, { passive: true });
-        window.addEventListener('resize', onScrollResize);
-
-        // Keyboard focus support
         document.addEventListener('focusin', e => {
             const target = closest(e.target, '[data-tooltip]');
             if (!target) return;
 
-            if (showTimer) clearTimeout(showTimer);
-            showTimer = setTimeout(() => {
-                const message = target.getAttribute('data-tooltip');
-                if (!message) return;
-                if (tooltipEl) destroyTooltipImmediate();
-                tooltipEl = createTooltip(message);
-                tooltipTrigger = 'focus';
-                positionTooltip(target, tooltipEl, target.getAttribute('data-position') || 'bottom');
-            }, 40);
+            clearTimers();
+            showTimer = setTimeout(() => createTooltip(target), 40);
         });
 
-        document.addEventListener('focusout', e => {
-            const target = closest(e.target, '[data-tooltip]');
-            if (!target) return;
-            destroyTooltip();
-        });
+        document.addEventListener('focusout', () => destroyTooltip());
 
-        // Clean up on pagehide
-        window.addEventListener('pagehide', () => destroyTooltipImmediate());
+        /* ======================
+           SAFETY KILLS
+           ====================== */
+
+        window.addEventListener('scroll', () => {
+            if (tooltipEl && activeTarget) {
+                positionTooltip(activeTarget, tooltipEl, activeTarget.getAttribute('data-position') || 'bottom');
+            }
+        }, { passive: true });
+
+        window.addEventListener('resize', () => destroyTooltip());
+        window.addEventListener('pagehide', () => destroyTooltip(true));
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) destroyTooltip(true);
+        });
     })();
+
 
 
     const formControlRoot = select(".FormControl-root", true);
@@ -669,406 +664,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     bodyObserver.observe(document.body, { childList: true, subtree: true });
-
-
-
-
-
-
-    class TabsRoot extends HTMLElement {
-        connectedCallback() {
-            Promise.all([
-                customElements.whenDefined("tab-trigger"),
-                customElements.whenDefined("tab-panel")
-            ]).then(() => this.init());
-        }
-
-        init() {
-            this.tabs = [...this.querySelectorAll("tab-trigger")];
-            this.panels = [...this.querySelectorAll("tab-panel")];
-
-            const value = Number(this.getAttribute("value") || 0);
-            this.activate(value);
-
-            this.addEventListener("tab-change", e => {
-                this.activate(e.detail.index);
-                this.setAttribute("value", e.detail.index);
-            });
-        }
-
-        activate(index) {
-            this.tabs.forEach((tab, i) => tab.setActive(i === index, i));
-            this.panels.forEach((panel, i) => panel.setActive(i === index));
-        }
-    }
-
-    customElements.define("tabs-root", TabsRoot);
-
-
-    const tabListSheet = new CSSStyleSheet();
-    tabListSheet.replaceSync(`
-:host {
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.scroll-container {
-  display: flex;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  flex: 1;
-  position: relative;
-}
-
-.scroll-btn {
-  display: none;
-  position: absolute;
-  top: 50%;
-  height: 100%;
-  transform: translateY(-50%);
-  z-index: 10;
-  display: grid;
-  place-content: center;
-  background: var(--clr-gray-200);
-  border: none;
-  cursor: pointer;
-  width: 2rem;
-}
-
-.scroll-btn.left {
-  left: 0;
-}
-
-.scroll-btn.right {
-  right: 0;
-}
-
-::slotted(tab-trigger) {
-border-radius: 0 !important;
-transform: unset !important;
-box-shadow: unset !important;
-background-color: transparent !important;
-flex: 1 0 auto;
-}
-
-::slotted(tab-trigger[aria-selected="true"]) {
-color: var(--clr-primary-main) !important;
-}
-
-.tab-indicator {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background: currentColor;
-    transform: translateX(0);
-    width: 0;
-    transition:
-        transform 300ms cubic-bezier(0.245,0.97,0.125,1),
-        width 300ms cubic-bezier(0.245,0.97,0.125,1);
-}
-`);
-
-    class TabList extends HTMLElement {
-        constructor() {
-            super();
-            this.attachShadow({ mode: "open" });
-            this.shadowRoot.adoptedStyleSheets = [tabListSheet];
-
-            this.shadowRoot.innerHTML = `
-            <button class="Button-root scroll-btn left" part="scroll-left"><iconify-icon icon="line-md:chevron-left"></iconify-icon></button>
-            <div class="scroll-container">
-                <slot></slot>
-                <div class="tab-indicator" part="indicator"></div>
-            </div>
-            <button class="Button-root scroll-btn right" part="scroll-right"><iconify-icon icon="line-md:chevron-right"></iconify-icon></button>
-        `;
-        }
-
-        connectedCallback() {
-            this.setAttribute("role", "tablist");
-
-            this.scrollContainer = this.shadowRoot.querySelector(".scroll-container");
-            this.leftBtn = this.shadowRoot.querySelector(".scroll-btn.left");
-            this.rightBtn = this.shadowRoot.querySelector(".scroll-btn.right");
-            this.indicator = this.shadowRoot.querySelector(".tab-indicator");
-
-            this.leftBtn.addEventListener("click", () => this.scroll(-150));
-            this.rightBtn.addEventListener("click", () => this.scroll(150));
-
-            this.addEventListener("tab-change", e => {
-                const tabs = [...this.querySelectorAll("tab-trigger")];
-                const active = tabs[e.detail.index];
-                if (active) this.moveIndicator(active);
-                this.updateScrollButtons();
-            });
-
-            const slot = this.shadowRoot.querySelector("slot");
-            slot.addEventListener("slotchange", () => {
-                const tabs = slot.assignedElements({ flatten: true });
-                const active = tabs.find(t => t.getAttribute("aria-selected") === "true");
-                if (active) this.moveIndicator(active, false); // scroll into view on init
-                this.updateScrollButtons();
-            });
-
-            this.scrollContainer.addEventListener("scroll", () => this.updateScrollButtons());
-            window.addEventListener("resize", () => this.updateScrollButtons());
-
-            // Initial scroll and indicator setup
-            requestAnimationFrame(() => {
-                const active = this.querySelector('[aria-selected="true"]');
-                if (active) this.moveIndicator(active, false);
-                this.updateScrollButtons();
-            });
-        }
-
-        scroll(amount) {
-            this.scrollContainer.scrollBy({ left: amount, behavior: "smooth" });
-        }
-
-        updateScrollButtons() {
-            if (!this.scrollContainer) return;
-
-            const { scrollLeft, scrollWidth, clientWidth } = this.scrollContainer;
-
-            const EPS = 2;
-
-            const atStart = scrollLeft <= EPS;
-            const atEnd = scrollLeft + clientWidth >= scrollWidth - EPS;
-
-            this.leftBtn.style.display = atStart ? "none" : "grid";
-            this.rightBtn.style.display = atEnd ? "none" : "grid";
-        }
-
-
-        moveIndicator(tab, animate = true) {
-            const tabRect = tab.getBoundingClientRect();
-            const containerRect = this.scrollContainer.getBoundingClientRect();
-
-            const left = tabRect.left - containerRect.left + this.scrollContainer.scrollLeft;
-            const width = tabRect.width;
-
-            if (!animate) this.indicator.style.transition = "none";
-
-            this.indicator.style.transform = `translateX(${left}px)`;
-            this.indicator.style.width = `${width}px`;
-
-            if (!animate) {
-                requestAnimationFrame(() => {
-                    this.indicator.style.transition = "";
-                });
-            }
-
-            // Auto-scroll active tab into view
-            const overLeft = left < this.scrollContainer.scrollLeft;
-            const overRight = left + width > this.scrollContainer.scrollLeft + this.scrollContainer.clientWidth;
-
-            if (overLeft) {
-                this.scrollContainer.scrollTo({ left: left, behavior: "smooth" });
-            } else if (overRight) {
-                this.scrollContainer.scrollTo({ left: left + width - this.scrollContainer.clientWidth, behavior: "smooth" });
-            }
-        }
-    }
-
-    customElements.define("tab-list", TabList);
-
-    class TabTrigger extends HTMLElement {
-        connectedCallback() {
-            this.setAttribute("role", "tab");
-            this.setAttribute("tabindex", "-1");
-            this.setAttribute("aria-selected", "false");
-
-            this.addEventListener("click", () => this.emit());
-            this.addEventListener("keydown", e => this.onKey(e));
-            this.classList.add("Button-root");
-        }
-
-        setActive(active, index) {
-            this.setAttribute("aria-selected", active);
-            this.setAttribute("tabindex", active ? "0" : "-1");
-            if (active) this.focus();
-        }
-
-        emit() {
-            const tabs = [...this.parentElement.querySelectorAll("tab-trigger")];
-            this.dispatchEvent(new CustomEvent("tab-change", {
-                bubbles: true,
-                detail: { index: tabs.indexOf(this) }
-            }));
-        }
-
-        onKey(e) {
-            const tabs = [...this.parentElement.querySelectorAll("tab-trigger")];
-            let index = tabs.indexOf(this);
-
-            if (e.key === "ArrowRight") index = (index + 1) % tabs.length;
-            if (e.key === "ArrowLeft") index = (index - 1 + tabs.length) % tabs.length;
-            if (e.key === "Enter" || e.key === " ") return this.emit();
-
-            tabs[index]?.focus();
-        }
-    }
-    customElements.define("tab-trigger", TabTrigger);
-
-
-    class TabContent extends HTMLElement {
-        connectedCallback() {
-            this.setAttribute("role", "presentation");
-        }
-    }
-    customElements.define("tab-content", TabContent);
-
-
-    class TabPanel extends HTMLElement {
-        connectedCallback() {
-            this.setAttribute("role", "tabpanel");
-            this.style.display = "none";
-            this._hideTimer = null;
-        }
-
-        setActive(active) {
-            const transition = this.querySelector("ui-transition");
-
-            if (this._hideTimer) {
-                clearTimeout(this._hideTimer);
-                this._hideTimer = null;
-            }
-
-            if (active) {
-                this.style.display = "block";
-                transition?.show();
-            } else {
-                transition?.hide();
-
-                this._hideTimer = setTimeout(() => {
-                    this.style.display = "none";
-                    this._hideTimer = null;
-                }, transition?.duration || 300);
-            }
-        }
-    }
-
-    customElements.define("tab-panel", TabPanel);
-
-
-    const transitionSheet = new CSSStyleSheet();
-    transitionSheet.replaceSync(`
-:host {
-    display: block;
-    will-change: transform, opacity;
-}
-
-:host([name="fade"]) {
-    opacity: 0;
-}
-
-:host([name="fade"][state="enter"]) {
-    opacity: 1;
-}
-
-:host([name="zoom"]) {
-    opacity: 0;
-    transform: scale(0.8);
-}
-
-:host([name="zoom"][state="enter"]) {
-    opacity: 1;
-    transform: scale(1);
-}
-
-:host([name="grow"]) {
-    transform: scaleY(0);
-    transform-origin: top;
-}
-
-:host([name="grow"][state="enter"]) {
-    transform: scaleY(1);
-}
-
-:host([name="slide"][direction="left"]) {
-    transform: translateX(-100%);
-}
-
-:host([name="slide"][direction="right"]) {
-    transform: translateX(100%);
-}
-
-:host([name="slide"][direction="top"]) {
-    transform: translateY(-100%);
-}
-
-:host([name="slide"][direction="bottom"]) {
-    transform: translateY(100%);
-}
-
-:host([name="slide"][state="enter"]) {
-    transform: translate(0);
-}
-`);
-
-    class UITransition extends HTMLElement {
-        constructor() {
-            super();
-            this.attachShadow({ mode: "open" });
-            this.shadowRoot.adoptedStyleSheets = [transitionSheet];
-            this.shadowRoot.innerHTML = `<slot></slot>`;
-        }
-
-        connectedCallback() {
-            this.duration = Number(this.getAttribute("duration") || 300);
-            this.easing =
-                this.getAttribute("easing") ||
-                "cubic-bezier(0.245,0.97,0.125,1)";
-
-            this._state = "exited";
-            this._timer = null;
-
-            this.style.transition =
-                `transform ${this.duration}ms ${this.easing},
-             opacity ${this.duration}ms ${this.easing}`;
-
-            this.setAttribute("state", "exit");
-            this.style.display = "none";
-        }
-
-        show() {
-            if (this._state === "entered") return;
-
-            this._clear();
-            this._state = "entering";
-
-            this.style.display = "block";
-            this.getBoundingClientRect();
-
-            this.setAttribute("state", "enter");
-
-            this._timer = setTimeout(() => {
-                this._state = "entered";
-            }, this.duration);
-        }
-
-        hide() {
-            if (this._state === "exited") return;
-
-            this._clear();
-            this._state = "exiting";
-
-            this.setAttribute("state", "exit");
-
-            this._timer = setTimeout(() => {
-                this.style.display = "none";
-                this._state = "exited";
-            }, this.duration);
-        }
-
-        _clear() {
-            clearTimeout(this._timer);
-            this._timer = null;
-        }
-    }
-
-    customElements.define("ui-transition", UITransition);
 });

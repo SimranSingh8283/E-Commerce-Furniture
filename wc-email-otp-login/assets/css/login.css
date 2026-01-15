@@ -1,0 +1,35 @@
+.cw-login-box input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+/* ===== OTP ===== */
+.cw-otp-inputs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.cw-otp-inputs input {
+    width: 52px;
+    height: 52px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+/* ===== BUTTON ===== */
+.cw-login-box button {
+    width: 100%;
+    padding: 14px;
+    background: #7b4a1e;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}

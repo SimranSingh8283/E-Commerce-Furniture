@@ -11,13 +11,14 @@ jQuery(function ($) {
     }
 
     const triggerUpdateCart = debounce(function ($form) {
-        $form.find('button[name="update_cart"]').trigger('click');
+        const btn = $form.find('button[name="update_cart"]')[0];
+        if (btn) btn.click();
     }, 300);
 
     $(document).on('change', 'form.woocommerce-cart-form input.qty', function () {
         var $oldInput = $(this);
         var cartItemKey = $oldInput.attr('name').match(/\[(.*?)\]/)[1];
-        var $form = $oldInput.closest('form');
+        const $form = $(this).closest('form');
 
         triggerUpdateCart($form);
     });

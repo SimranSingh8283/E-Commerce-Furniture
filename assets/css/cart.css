@@ -1,19 +1,21 @@
-.Cart-table .Table-productCell {
-    max-width: 200px;
+@media (min-width: 992px) {
+    .Cart-table .Table-productCell {
+        max-width: 200px;
+    }
+
+    .Cart-table .Table-productCell .Table-cell {
+        display: grid;
+        gap: 1.5rem;
+        align-items: center;
+        grid-template-columns: auto 1fr;
+    }
+
+    .Cart-table .Cart-thumbnail img {
+        max-width: 180px;
+    }
 }
 
-.Cart-table .Table-productCell .Table-cell {
-    display: grid;
-    gap: 1.5rem;
-    align-items: center;
-    grid-template-columns: auto 1fr;
-}
-
-.Cart-table .Cart-thumbnail img {
-    max-width: 180px;
-}
-
-.Cart-table .Table-quantityCell .Table-quantityWrapper {
+.quantityWrapper {
     background-color: var(--clr-primary-light);
     align-items: center;
     display: grid;
@@ -22,17 +24,22 @@
     border-radius: 100vmax;
     contain: paint;
 }
-.Cart-table .Table-quantityCell .Table-quantityWrapper .quantity {
+
+.quantityWrapper .quantity {
     height: 100%;
-    padding-block: 0.5rem;
+    padding-block: 0.5em;
 }
-.Cart-table .Table-quantityCell .Table-quantityWrapper input {
+
+.quantityWrapper input {
     border: 0;
-    height: 100%;
+    width: 3.631em;
+    text-align: center;
+    padding-block: 0.5em;
     background-color: transparent;
     border-inline: 1px solid hsl(var(--clr-primary-hsl), 50%);
 }
-.Cart-table .Table-quantityCell .Table-quantityWrapper .Button-root {
+
+.quantityWrapper .Button-root {
     border-radius: 0;
 }
 
@@ -44,12 +51,14 @@
     border-radius: 1rem;
     contain: paint;
 }
+
 .Summary-root {
     border-top: 1px solid hsl(var(--clr-primary-hsl), 20%);
     padding-top: 1.5rem;
     display: grid;
     gap: 1.5rem;
 }
+
 .Summary-root .Shipping-loading {
     position: absolute;
     inset: 0;
@@ -58,17 +67,67 @@
     background-color: hsl(0, 0%, 100%, 20%);
     backdrop-filter: blur(0.5rem);
 }
+
 .Summary-root .Summary-item {
     display: flex;
     justify-content: space-between;
 }
-.Summary-root .Summary-item >:first-child {
+
+.Summary-root .Summary-item>:first-child {
     font-weight: 600;
 }
+
 .Summary-root .Summary-item:last-child {
     border-top: 1px solid hsl(var(--clr-primary-hsl), 20%);
     padding-top: 1.5rem;
 }
+
 .Cart-action {
     text-align: right;
+}
+
+
+.Cart-table.Cart-mobile {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .Cart-table.Cart-desktop {
+        display: none;
+    }
+
+    .Cart-table .Table-cell {
+        padding: 0.5rem;
+    }
+
+    .Cart-table tbody .Table-cell {
+        display: grid;
+        grid-template-columns: min(28%, 150px) 1fr auto;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .Cart-table tbody .Cart-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.25rem;
+    }
+
+    .Cart-table .Table-quantityWrapper .Button-root {
+        font-size: 1rem;
+    }
+
+    .quantityWrapper {
+        margin-top: 0.5rem;
+    }
+
+    .quantityWrapper .quantity {
+        font-size: 80%;
+        min-width: max-content;
+    }
+
+    .Cart-table.Cart-mobile {
+        display: table;
+    }
 }

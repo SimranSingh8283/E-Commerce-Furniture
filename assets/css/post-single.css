@@ -141,8 +141,10 @@
     padding: 1em;
     display: block;
     width: 100%;
+    font-size: 1rem;
     border-radius: 1em;
     border: 1px solid var(--clr-border);
+    resize: vertical;
 }
 .PostComments-footer textarea:is(:hover, :focus) {
     border-color: var(--clr-primary-main);

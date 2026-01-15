@@ -180,4 +180,69 @@ function default_post_slider_shortcode($atts)
 }
 
 add_shortcode('post_slider', 'default_post_slider_shortcode');
-?>
+
+
+
+function custom_thumb_wishlist_products_shortcode( $atts ) {
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return '';
+    }
+
+    $atts = shortcode_atts(
+        [
+            'ids' => '925,621',
+        ],
+        $atts,
+        'thumb_wishlist_products'
+    );
+
+    $product_ids = array_slice(
+        array_filter(
+            array_map( 'absint', explode( ',', $atts['ids'] ) )
+        ),
+        0,
+        2
+    );
+
+    if ( empty( $product_ids ) ) {
+        return '';
+    }
+
+    $output = '<div class="ProductThumbGrid">';
+
+    foreach ( $product_ids as $product_id ) {
+        $product = wc_get_product( $product_id );
+        if ( ! $product ) continue;
+
+        $thumb = get_the_post_thumbnail(
+            $product_id,
+            'woocommerce_thumbnail',
+            [ 'class' => 'Product-thumb-img' ]
+        );
+
+        $output .= '
+        <div class="Hero-product">
+            <a href="' . esc_url( get_permalink( $product_id ) ) . '" class="Hero-product-thumb">
+                ' . $thumb . '
+            </a>
+
+            <div class="Product-wishlist" data-product-id="' . esc_attr( $product_id ) . '">
+                <div class="Product-wishlist-native" style="display:none;">
+                    ' . do_shortcode( '[woosw id="' . $product_id . '"]' ) . '
+                </div>
+
+                <button class="Button-root Button-icon Button-wishlist"
+                    data-tooltip="Add to Wishlist"
+                    aria-label="Add to Wishlist">
+                    <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+                </button>
+            </div>
+
+        </div>';
+    }
+
+    $output .= '</div>';
+
+    return $output;
+}
+add_shortcode( 'thumb_wishlist_products', 'custom_thumb_wishlist_products_shortcode' );

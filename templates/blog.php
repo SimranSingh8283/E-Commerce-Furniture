@@ -57,7 +57,18 @@ $template_uri = get_template_directory_uri();
                 <?php foreach ($tags as $tag): ?>
                     <a href="<?php echo esc_url(add_query_arg('blog_tag', $tag->slug)); ?>"
                         class="Blog-chip <?php echo ($active_tag === $tag->slug) ? 'is-active' : ''; ?>">
-                        <?php echo esc_html($tag->name); ?>
+
+                        <?php
+                        $icon = get_term_meta($tag->term_id, 'term_icon', true);
+                        if ($icon):
+                            ?>
+                            <iconify-icon icon="<?php echo esc_attr($icon); ?>" class="Blog-chip-icon">
+                            </iconify-icon>
+                        <?php endif; ?>
+
+                        <span class="Blog-chip-label">
+                            <?php echo esc_html($tag->name); ?>
+                        </span>
                     </a>
                 <?php endforeach; ?>
 
@@ -69,12 +80,16 @@ $template_uri = get_template_directory_uri();
         $blog_search = isset($_GET['blog_search']) ? sanitize_text_field($_GET['blog_search']) : '';
         $blog_tag = isset($_GET['blog_tag']) ? sanitize_text_field($_GET['blog_tag']) : '';
 
+        $paged = max(1, get_query_var('paged'), get_query_var('page'));
+
         $args = [
             'post_type' => 'post',
             'post_status' => 'publish',
             'posts_per_page' => 9,
             'category_name' => 'articles',
+            'paged' => $paged,
         ];
+
 
         if ($blog_search) {
             $args['s'] = $blog_search;
@@ -94,7 +109,7 @@ $template_uri = get_template_directory_uri();
                     $blog_query->the_post(); ?>
                     <div class="Col-root Col-lg-4">
                         <?php
-                            get_template_part('template-parts/post/card');
+                        get_template_part('template-parts/post/card');
                         ?>
                     </div>
 
@@ -106,6 +121,25 @@ $template_uri = get_template_directory_uri();
         <?php endif; ?>
 
         <?php wp_reset_postdata(); ?>
+
+        <?php if ($blog_query->max_num_pages > 1): ?>
+
+            <nav class="Pagination-root Pagination-blog" aria-label="Blog Pagination">
+                <?php
+                echo paginate_links([
+                    'total' => $blog_query->max_num_pages,
+                    'current' => $paged,
+                    'mid_size' => 2,
+                    'end_size' => 1,
+                    'prev_text' => '<iconify-icon data-tooltip="Previus" icon="mdi:chevron-left"></iconify-icon>',
+                    'next_text' => '<iconify-icon data-tooltip="Next" icon="mdi:chevron-right"></iconify-icon>',
+                    'type' => 'list',
+                ]);
+                ?>
+            </nav>
+
+        <?php endif; ?>
+
 
     </div>
 </section>

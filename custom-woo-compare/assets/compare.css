@@ -1,0 +1,616 @@
+/* ===============================
+   COMPARE TABLE 
+================================ */
+
+.compare-wrapper {
+    overflow-x: auto;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    background: #fff;
+    min-width: 1080px;
+}
+
+/* LEFT LABEL COLUMN */
+.compare-table th {
+    width: 180px;
+    text-align: left;
+    padding: 16px 20px;
+    font-weight: 600;
+    color: #333;
+    vertical-align: middle;
+}
+
+/* PRODUCT COLUMNS */
+.compare-table td {
+    text-align: center;
+    padding: 20px 15px;
+    border-left: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* PRODUCT CARD */
+.compare-table td h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 10px 0 4px;
+    line-height: 1.3;
+}
+
+.compare-table .price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+/* PRODUCT IMAGE */
+.compare-table img {
+    max-width: 130px;
+    height: auto;
+    margin: 0 auto 8px;
+    display: block;
+}
+
+/* RATING */
+.compare-table .star-rating {
+    float: none;
+    margin: 0 auto;
+}
+
+/* ADD MORE COLUMN */
+.compare-table .add-more {
+    font-size: 40px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* STOCK */
+.in-stock {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.out-stock {
+    color: #c62828;
+    font-weight: 600;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .compare-table th {
+        width: 140px;
+        font-size: 14px;
+        padding: 14px;
+    }
+
+    .compare-table td {
+        padding: 14px 10px;
+    }
+
+    .compare-table img {
+        max-width: 100px;
+    }
+}
+
+
+.compare-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px auto 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #f5f5f5;
+    color: #c62828;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.compare-remove:hover {
+    background: #c62828;
+    color: #fff;
+}
+
+
+
+.compare-header {
+    margin-bottom: 20px;
+}
+
+.count {
+    text-align: center;
+}
+.count .Compare-count {
+    font-size: clamp(1.5rem, 3vw + 1rem, 3rem);
+    font-weight: 700;
+}
+
+.count span {
+    display: block;
+    font-size: clamp(1.25rem, 1.25vw + 0.5rem, 1.5rem);
+    font-weight: 500;
+    color: #777;
+}
+
+.compare-search {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: #f7f4ef;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+
+.compare-rating {
+    text-align: center;
+}
+
+.compare-rating .star-rating {
+    float: none;
+    margin: 0 auto 6px;
+}
+
+.compare-rating .review-count {
+    font-size: 13px;
+    color: #777;
+}
+
+
+/* WooCommerce Star Rating Fix */
+.star-rating {
+    position: relative;
+    overflow: hidden;
+    height: 1em;
+    line-height: 1;
+    font-size: 14px;
+    width: 5.4em;
+    font-family: star;
+    margin: 0 auto;
+}
+
+.star-rating::before {
+    content: "★★★★★";
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    color: #ddd;
+}
+
+.star-rating span {
+    overflow: hidden;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-top: 1.5em;
+}
+
+.star-rating span::before {
+    content: "★★★★★";
+    top: 0;
+    position: absolute;
+    left: 0;
+    color: #f5a623;
+}
+
+
+
+.compare-wrapper {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.compare-table th {
+    padding: 15px;
+    text-align: left;
+}
+
+.compare-table td {
+    padding: 15px;
+    text-align: center;
+    border-left: 1px solid #eee;
+}
+
+.compare-remove {
+    cursor: pointer;
+    color: #c62828;
+    font-weight: bold;
+}
+
+.compare-search {
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+
+.add-more {
+    font-size: 32px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+#compare-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    z-index: 9999;
+}
+
+.compare-modal-content {
+    width: 720px;
+    max-width: 95%;
+    background: #fff;
+    border-radius: 14px;
+    margin: 6vh auto;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+}
+
+
+#compare-modal-search {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.compare-result {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    margin-bottom: 12px;
+    transition: 0.2s ease;
+}
+
+.compare-result:hover {
+    background: #fafafa;
+}
+
+#compare-modal-results {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+
+
+.compare-result>img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f6f6f6;
+}
+
+
+.cr-middle {
+    flex: 1;
+}
+
+.cr-middle h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.cr-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+
+.chip {
+    background: #f1f1f1;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: #444;
+}
+
+
+@media (max-width: 600px) {
+    .compare-result {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .compare-select-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.Table-compare.Table-compare.Table-compare {
+    box-shadow: unset;
+    border-radius: unset;
+}
+
+.Table-compare.Table-compare.Table-compare td {
+    border: 0;
+}
+
+.Table-compare.Table-compare.Table-compare tr:not(:last-child) {
+    border-bottom: 1px solid var(--clr-gray-300);
+}
+
+.Table-compare.Table-compare.Table-compare tr {
+    background: unset !important;
+}
+
+.Table-compare .Compare-count {
+    font-size: clamp(1.25rem, 2vw + 0.5rem, 3rem);
+}
+
+.Table-compare td {
+    padding: 0;
+}
+
+.Table-compare .Table-cell {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.Table-compare .compare-search {
+    cursor: text;
+}
+
+.Compare-thumb {
+    contain: layout;
+}
+
+.Compare-thumb .compare-remove {
+    position: absolute;
+    inset: 1rem 1rem auto auto;
+}
+
+.Compare-thumb img {
+    aspect-ratio: 1;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.Compare-product-info h4 {
+    margin: 1rem 0 !important;
+}
+
+.Compare-ratings .star-rating {
+    width: 100%;
+    display: block;
+    font-size: 1.75rem;
+    text-align: center;
+    margin-block-end: 1rem;
+}
+
+.Compare-ratings .star-rating::before {
+    content: "★★★★★";
+    color: #f5a623;
+    position: static;
+    display: block;
+    float: unset;
+}
+
+.Compare-ratings .star-rating span {
+    display: none;
+}
+
+.Compare-thumb.add-more {
+    width: 100%;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: 0.5rem;
+}
+
+.compare-modal-header {
+    display: flex;
+    gap: 1rem;
+}
+
+#compare-modal .compare-result .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+#compare-modal .compare-result h4 {
+    font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+    margin-bottom: 0.5rem;
+}
+
+#compare-modal .compare-result .fc-option :is(input, span:not(.fc-color)) {
+    display: none;
+}
+
+#compare-modal .compare-result .fc-options {
+    gap: 0rem;
+}
+
+#compare-modal .compare-result .fc-option {
+    width: 2rem;
+}
+
+#compare-modal .compare-result .fc-group {
+    margin: 0;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+}
+
+#compare-modal .compare-result .fc-group strong::after {
+    content: ":";
+}
+
+#compare-modal .compare-result>img {
+    width: 200px;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+#compare-modal .compare-result .Button-root {
+    margin-top: 1rem;
+}
+
+
+
+
+
+.Compare-grid {
+    --_cells: 5;
+    --_gap: 1.5rem;
+}
+
+.Compare-grid .Compare-row {
+    display: flex;
+    gap: var(--_gap);
+    overflow-x: auto;
+}
+
+.Compare-grid .Compare-row > * {
+    flex: 0 0 calc((100% / var(--_cells)) - var(--_gap) * (var(--_total-cells) - 1) / var(--_total-cells));
+}
+
+.Compare-cell {
+    padding: 1rem;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+}
+
+.Compare-head {
+    min-height: 368px;
+    margin-bottom: 1rem;
+}
+
+.Compare-item {
+    padding: 1rem;
+    height: 56px;
+    contain: layout;
+}
+@media (max-width: 575.98px) {
+    .Compare-item {
+        padding: 0.5rem;
+        font-size: 80%;
+        align-content: center;
+    }
+}
+.Compare-item img {
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.Compare-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    height: 1px;
+    width: 100vmax;
+    background-color: var(--clr-gray-300);
+}
+
+
+
+.Compare-row >:first-child {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    background-color: var(--clr-white);
+    z-index: 9;
+}
+
+.Compare-row:not(:last-child) {
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.Compare-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.Compare-navigation {
+    display: flex;
+    background-color: var(--clr-primary-light);
+    max-width: max-content;
+    border-radius: 100vmax;
+    contain: paint;
+    margin-inline: auto;
+}
+.Compare-navigation .Button-root {
+    padding: 0.74em 1.5em;
+    height: unset;
+    width: unset;
+    font-size: 1rem;
+    border-radius: 0;
+}
+.Compare-navigation .Button-root:not(:last-child) {
+    border-right: 1px solid;
+}
+
+
+
+@media (max-width: 991.98px) {
+    .Compare-grid {
+        --_cells: 3;
+    }
+}
+
+@media (max-width: 765.98px) {
+    .Compare-grid {
+        --_cells: 2;
+    }
+}
+
+
+
+
+.compare-result .Attribute-options {
+    flex-direction: column;
+    align-items: start !important;
+}
+
+.compare-result .Attribute-group strong::after {
+    content: ":";
+}
+.compare-result .Attribute-group {
+    gap: 0.15rem;
+}
+.compare-result .Swatch-list {
+    display: flex;
+}

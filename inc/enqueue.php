@@ -17,7 +17,7 @@ if (!class_exists('ThemeEnqueue')) {
             wp_enqueue_script('jquery');
             wp_enqueue_style('styles', get_template_directory_uri() . '/assets/css/styles.css', [], '0.3');
             wp_enqueue_script('SV-js', get_template_directory_uri() . '/assets/js/SV.js', [], '0.1', true);
-            wp_enqueue_script('wishlist-js', get_template_directory_uri() . '/assets/js/wishlist.js', [], '0.1', true);
+            wp_enqueue_script('theme-js', get_template_directory_uri() . '/assets/js/theme.js', [], '0.1', true);
             wp_enqueue_script('index-js', get_template_directory_uri() . '/assets/js/index.js', [], '0.1', true);
             wp_enqueue_script('add-to-cart-js', get_template_directory_uri() . '/assets/js/add-to-cart.js', [], '0.1', true);
             wp_enqueue_script('swiper-js', get_template_directory_uri() . '/assets/js/swiper-elements.min.js', [], '0.1', true);

@@ -10,7 +10,7 @@ get_header();
 <section class="Block-root Block-wishlist Wishlist-root">
     <div class="Container-root">
 
-        <?php echo do_shortcode('[woosw_list]'); ?>
+        <?php echo do_shortcode('[cw_wishlist]'); ?>
 
     </div>
 </section>
