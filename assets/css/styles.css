@@ -3852,3 +3852,12 @@ accordion-root accordion-item[state="open"] accordion-trigger::after {
     font-weight: 400;
     opacity: 0.9;
 }
+
+.OrderCard-price {
+    display: flex;
+    gap: 0.5rem;
+}
+.OrderCard-price .price-old {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
