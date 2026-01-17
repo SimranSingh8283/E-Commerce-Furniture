@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="./theme/theme.js" type="module"></script>
+</head>
+
+<body>
+    <ui-button>Home</ui-button>
+
+    <tabs-root value="0">
+        <tab-list>
+            <tab-trigger>Tab 1</tab-trigger>
+            <tab-trigger>Tab 2</tab-trigger>
+        </tab-list>
+
+        <tab-content>
+            <tab-panel>Tab 1</tab-panel>
+            <tab-panel>Tab 2</tab-panel>
+        </tab-content>
+    </tabs-root>
+
+    <button id="popup">Test</button>
+    <ui-popover anchor="#popup">Test</ui-popover>
+
+
+    <accordion-root value="0">
+        <accordion-item>
+            <accordion-trigger>
+                Section 1
+            </accordion-trigger>
+            <accordion-panel>
+                <div>Content 1</div>
+            </accordion-panel>
+        </accordion-item>
+
+        <accordion-item>
+            <accordion-trigger>
+                Section 2
+            </accordion-trigger>
+            <accordion-panel>
+                <div>Content 2</div>
+            </accordion-panel>
+        </accordion-item>
+    </accordion-root>
+</body>
+
+</html>

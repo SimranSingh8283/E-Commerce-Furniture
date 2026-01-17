@@ -1,0 +1,280 @@
+:host {
+    display: contents;
+}
+
+.Button-root {
+    --_size: 0.725em;
+    text-decoration: none;
+    background: unset;
+    background-color: var(--clr-gray-300);
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: calc(var(--_size) * 1.121) calc(var(--_size) * 2.95);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    text-align: center;
+    border: 0;
+    overflow: hidden;
+    isolation: isolate;
+    position: relative;
+    background-image: none;
+    border-radius: calc(var(--_size) * 1.25);
+    /* border-radius: 0; */
+    transition: all 300ms;
+    /* text-transform: uppercase; */
+    font-family: var(--font-title);
+    line-height: 1;
+    cursor: pointer;
+}
+
+.Button-root:not(.Button-icon):is(:hover, :focus) {
+    box-shadow: var(--elevation-3);
+}
+
+.Button-root:not(.Button-icon):active {
+    transform: scale(0.95);
+    box-shadow: var(--elevation-4);
+}
+
+.Button-root[data-size="sm"] {
+    font-size: 0.925rem;
+}
+
+.Button-root[data-size="md"] {
+    font-size: 1rem;
+}
+
+.Button-root[data-size="lg"] {
+    font-size: 1.25rem;
+}
+
+.Button-root[data-variant="contained"] {
+    background-color: var(--clr-body);
+    color: var(--clr-primary-light);
+}
+
+.Button-root[data-variant="contained"]:hover {
+    background-color: var(--clr-dark);
+}
+
+.Button-root.Button-primary[data-variant="contained"] {
+    background-color: var(--clr-primary-main);
+    color: var(--clr-primary-light);
+}
+
+.Button-root.Button-primary[data-variant="contained"]:hover {
+    background-color: var(--clr-primary-dark);
+}
+
+.Button-root.Button-secondary[data-variant="contained"] {
+    background-color: var(--clr-secondary-main);
+    color: var(--clr-secondary-text);
+}
+
+.Button-root.Button-secondary[data-variant="contained"]:hover {
+    background-color: var(--clr-secondary-dark);
+}
+
+.Button-root.Button-light[data-variant="contained"] {
+    color: var(--clr-primary-text);
+    background-color: var(--clr-primary-light);
+}
+
+.Button-root.Button-light[data-variant="contained"]:hover {
+    color: var(--clr-primary-text);
+    background-color: var(--clr-gray-100);
+}
+
+.Button-root[data-variant="outlined"] {
+    border: 2px solid currentColor;
+    color: var(--clr-body);
+    background-color: transparent;
+}
+
+.Button-root[data-variant="outlined"]:not([data-ripple]):hover {
+    background-color: hsl(0, 0%, 0%, 5%);
+    backdrop-filter: blur(0.5em);
+}
+
+.Button-root.Button-light[data-variant="outlined"] {
+    border: 2px solid currentColor;
+    color: var(--clr-white);
+    background-color: transparent;
+}
+
+.Button-root.Button-light[data-variant="outlined"]:not([data-ripple]):hover {
+    background-color: hsl(0, 0%, 100%, 5%);
+    backdrop-filter: blur(0.5em);
+}
+
+.Button-root.Button-primary[data-variant="outlined"] {
+    border: 2px solid currentColor;
+    color: var(--clr-primary-main);
+    background-color: transparent;
+}
+
+.Button-root.Button-primary[data-variant="outlined"]:not([data-ripple]):hover {
+    background-color: hsl(var(--clr-primary-hsl), 10%);
+    backdrop-filter: blur(0.5em);
+}
+
+.Button-root.Button-secondary[data-variant="outlined"] {
+    border: 2px solid currentColor;
+    color: var(--clr-secondary-main);
+    background-color: transparent;
+}
+
+.Button-root.Button-secondary[data-variant="outlined"]:not([data-ripple]):hover {
+    background-color: hsl(42, 92%, 55%, 10%);
+    backdrop-filter: blur(0.5em);
+}
+
+.Button-root[data-variant="underline"] {
+    background-color: transparent;
+    background-image: linear-gradient(var(--clr-primary-main), var(--clr-primary-main));
+    background-size: 100% 1px;
+    background-position-y: 100%;
+    background-repeat: no-repeat;
+    transition: background-size 75ms ease;
+}
+
+.Button-root[data-variant="underline"]:hover {
+    background-size: 100% 2px;
+}
+
+.Button-root[data-variant="alpha"] {
+    background-color: hsl(0, 0%, 0%, 20%);
+    color: inherit;
+    backdrop-filter: blur(1rem);
+    padding: 0.725em;
+    padding-left: 1.5em;
+    border-radius: 100vmax;
+    align-items: center;
+}
+
+.Button-root[data-variant="alpha"] .Button-icon {
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    background-color: var(--clr-primary-light);
+    color: var(--clr-primary-text);
+}
+
+.Button-root.Button-icon {
+    --_size: 1.35em;
+    display: grid;
+    place-content: center;
+    padding: 0.375em;
+    width: calc(var(--_size) * 1.525);
+    height: calc(var(--_size) * 1.525);
+    font-size: var(--_size);
+    border-radius: 100vmax;
+    align-content: center;
+    background-color: transparent;
+    -webkit-border-radius: 100vmax;
+    -moz-border-radius: 100vmax;
+    -ms-border-radius: 100vmax;
+    -o-border-radius: 100vmax;
+}
+
+.Button-root[class*="Button-icon-"] {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.Button-root.Button-icon:hover {
+    background-color: hsl(0 0% 0% / 5%);
+}
+
+.Button-root.Button-icon> :is(img, svg) {
+    max-width: 1.25em;
+}
+
+.Button-root.Button-icon>i {
+    font-size: 1.25em;
+}
+
+.Button-root:is([disabled], .Button-disabled) {
+    pointer-events: none;
+    background-color: var(--clr-gray-400) !important;
+    color: var(--clr-primary-text) !important;
+    user-select: none;
+}
+
+.Button-root>* {
+    pointer-events: none;
+}
+
+.Button-loading {
+    background-color: var(--clr-gray-400) !important;
+}
+
+.Button-loading>:not(.Button-loader) {
+    color: transparent;
+}
+
+.Button-loader {
+    color: var(--clr-primary-text);
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: max-content;
+    height: max-content;
+}
+
+[data-group="btns"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+[data-group="btns"]>* {
+    margin: 0;
+}
+
+.ripple-orb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    scale: 0;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: -2;
+    transition: 700ms opacity ease, scale 1s cubic-bezier(0.275, 0.82, 0.165, 1);
+    transform-origin: center;
+}
+
+.Button-root:hover .ripple-orb {
+    transition: 100ms opacity ease, scale 1s cubic-bezier(0.275, 0.82, 0.165, 1);
+    scale: 2;
+    opacity: 1;
+}
+
+.Button-root:focus-visible .ripple-orb {
+    opacity: 1;
+    margin: auto;
+    scale: 0.75;
+}
+
+.Button-root:not([data-ripple="true"]) .ripple-orb {
+    margin: auto;
+}
+
+.ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    background: currentColor;
+    opacity: 0.25;
+    translate: -50% -50%;
+    transition: transform 600ms ease, opacity 600ms ease;
+    pointer-events: none;
+}

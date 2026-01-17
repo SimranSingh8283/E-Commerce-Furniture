@@ -1,0 +1,7 @@
+:host {
+    display: block;
+}
+
+.panel-inner {
+    padding: 1rem;
+}

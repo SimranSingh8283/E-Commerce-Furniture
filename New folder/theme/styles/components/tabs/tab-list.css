@@ -1,0 +1,50 @@
+:host {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.scroll-container {
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    flex: 1;
+    position: relative;
+}
+
+.scroll-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    height: 100%;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: grid;
+    place-content: center;
+    background: var(--clr-gray-200);
+    border: none;
+    cursor: pointer;
+    width: 2rem;
+}
+
+.scroll-btn.left {
+    left: 0;
+}
+
+.scroll-btn.right {
+    right: 0;
+}
+
+.tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: currentColor;
+    transform: translateX(0);
+    width: 0;
+    transition:
+        transform 300ms cubic-bezier(0.245, 0.97, 0.125, 1),
+        width 300ms cubic-bezier(0.245, 0.97, 0.125, 1);
+}

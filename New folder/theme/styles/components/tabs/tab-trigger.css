@@ -1,0 +1,17 @@
+:host {
+    border-radius: 0;
+    transform: unset;
+    box-shadow: unset;
+    background-color: transparent;
+    flex: 1 0 auto;
+}
+
+:host[aria-selected="true"] {
+    color: var(--clr-primary-main);
+}
+
+ui-button::part(root) {
+    width: 100%;
+    border-radius: 0;
+    transform: unset;
+}
